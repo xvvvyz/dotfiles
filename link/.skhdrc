@@ -1,0 +1,35 @@
+cmd - return : open -a "Terminal"
+shift + cmd - return : open -a "Firefox Developer Edition"
+
+shift + cmd - h : \
+  yabai -m window --resize right:-50:0; \
+  yabai -m window --resize left:-50:0
+
+shift + cmd - j : \
+  yabai -m window --resize bottom:0:50; \
+  yabai -m window --resize top:0:50
+
+shift + cmd - k : \
+  yabai -m window --resize bottom:0:-50; \
+  yabai -m window --resize top:0:-50
+
+shift + cmd - l : \
+  yabai -m window --resize right:50:0; \
+  yabai -m window --resize left:50:0
+
+shift + alt + cmd - f : yabai -m window --toggle float
+shift + alt + cmd - h : yabai -m window --warp west
+shift + alt + cmd - j : yabai -m window --warp south
+shift + alt + cmd - k : yabai -m window --warp north
+shift + alt + cmd - l : yabai -m window --warp east
+shift + alt + cmd - r : yabai -m space --rotate 90
+
+shift + alt + cmd - 0x1E : yabai -m space --padding rel:-20:-20:-20:-20
+shift + alt + cmd - 0x21 : yabai -m space --gap rel:-20
+shift + cmd - 0x1E : yabai -m space --padding rel:20:20:20:20
+shift + cmd - 0x21 : yabai -m space --gap rel:20
+
+shift + alt + cmd - backspace : \
+  yabai -m space --padding abs:20:20:20:20; \
+  yabai -m space --gap abs:20; \
+  yabai -m space --balance

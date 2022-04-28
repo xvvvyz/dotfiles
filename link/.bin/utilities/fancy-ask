@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+fancy_ask() {
+  switch="\033["
+  normal="${switch}0m"
+  blue="${switch}1;35m"
+
+  echo -en "${blue}==>${normal} $* (y/n): "
+  read -r answer
+
+  if [[ ! "$answer" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
+    echo
+    exit 0
+  fi
+}

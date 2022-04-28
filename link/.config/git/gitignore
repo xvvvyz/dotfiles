@@ -1,0 +1,8 @@
+*.log
+*.swp
+.DS_Store
+.git/
+.idea/
+.yarn/
+.yarnrc
+tags

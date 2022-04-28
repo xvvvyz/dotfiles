@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+
+set -e
+
+if [[ -d dist ]]; then
+  build_dir=dist
+elif [[ -d build ]]; then
+  build_dir=build
+elif [[ -d out ]]; then
+  build_dir=out
+elif [[ -d public ]]; then
+  build_dir=public
+else
+  echo "error: deploy directory (dist|build|out|public) not found..."
+  exit 1
+fi
+
+git add "$build_dir" -f
+git commit -m "deploy"
+
+if git ls-remote | grep -q gh-pages; then
+  git show-branch gh-pages && git branch -D gh-pages
+  git subtree split --prefix "$build_dir" -b gh-pages
+  git push -f origin gh-pages:gh-pages
+  git branch -D gh-pages
+else
+  git subtree push --prefix "$build_dir" origin gh-pages
+fi
+
+git reset HEAD^
+git gc
+git gc --aggressive
+git prune

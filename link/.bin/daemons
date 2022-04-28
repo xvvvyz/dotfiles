@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+ls -1 -d /Library/LaunchAgents/**
+ls -1 -d /Library/LaunchDaemons/**
+ls -1 -d ~/Library/LaunchAgents/**

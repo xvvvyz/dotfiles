@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+fancy_print() {
+  switch="\033["
+  normal="${switch}0m"
+  blue="${switch}1;35m"
+  echo -e "${blue}==>${normal} $*"
+} 

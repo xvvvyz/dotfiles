@@ -1,0 +1,4 @@
+git_protocol: https
+editor: nvim
+prompt: enabled
+pager: less

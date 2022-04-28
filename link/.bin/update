@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+
+source "$(dirname "$0")/utilities/config"
+source "$(dirname "$0")/utilities/fancy-print"
+
+fancy_print "updating osx..."
+sudo softwareupdate -ai
+
+fancy_print "stopping brew services..."
+brew services stop yabai
+
+fancy_print "updating brew packages..."
+brew upgrade
+
+fancy_print "starting brew services..."
+brew services start yabai
+
+fancy_print "reloading yabai..."
+sudo yabai --uninstall-sa
+sudo yabai --install-sa
+killall Dock
+
+fancy_print "updating yarn packages..."
+yarn global upgrade --latest --silent
+
+fancy_print "updating python packages..."
+xargs pip3 install -U < "${list_file_python_packages}"
+
+fancy_print "updating neovim plugins..."
+nvim -c 'PlugUpgrade' -c 'PlugUpdate' -c 'UpdateRemotePlugins' -c 'qa!'
