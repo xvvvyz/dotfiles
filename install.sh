@@ -6,17 +6,6 @@ source "$(dirname "$0")/link/.bin/utilities/fancy-ask"
 
 GLOBIGNORE=".:.."
 
-if [[ -d ~/.gnupg ]]; then
-  fancy_print "removing existing .gnupg..."
-  rm -rf ~/.gnupg
-fi
-
-if [[ -d ~/.config ]]; then
-  fancy_print "merging .config files..."
-  cp -npr ~/.config/* link/.config
-  rm -rf ~/.config
-fi
-
 fancy_print "setting defaults..."
 defaults write -g InitialKeyRepeat -int 15
 defaults write -g KeyRepeat -int 1
@@ -34,12 +23,23 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow DisableFDEAutoLog
 killall Dock
 killall Finder
 
+if [[ -d ~/.config ]]; then
+  fancy_print "merging .config files..."
+  cp -npr ~/.config/* link/.config
+  rm -rf ~/.config
+fi
+
+fancy_print "removing existing .gnupg..."
+rm -rf ~/.gnupg
+
 fancy_print "symlinking dotfiles..."
 ln -svfn "$(pwd)/link/."??* ~
 
-fancy_print "fixing permissions..."
-chmod 700 ~/.gnupg
-find ~/.gnupg -type f -exec chmod 600 {} \;
+fancy_print "installing zgenom..."
+git clone https://github.com/jandamm/zgenom.git "$zgen_dir"
+
+fancy_print "sourcing ~/.zshrc"
+source ~/.zshrc
 
 fancy_print "installing homebrew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -52,6 +52,10 @@ brew tap homebrew/cask-versions
 fancy_print "installing brew packages..."
 xargs brew install < "${list_file_brew_packages}"
 
+fancy_print "starting brew services..."
+brew services start yabai
+brew services start skhd
+
 fancy_print "installing brew casks..."
 xargs brew install --cask < "${list_file_brew_casks}"
 
@@ -61,17 +65,14 @@ xargs yarn global add < "${list_file_yarn_packages}"
 fancy_print "installing python packages..."
 xargs pip3 install < "${list_file_python_packages}"
 
-fancy_print "installing zgen..."
-git clone https://github.com/tarjoilija/zgen.git "$zgen_dir"
-
 fancy_print "installing vim-plug..."
 curl --create-dirs -fsSLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 fancy_print "installing neovim plugins..."
 nvim -c 'PlugInstall' -c 'UpdateRemotePlugins' -c 'qa!'
 
-fancy_print "starting brew services..."
-brew services start yabai
-brew services start skhd
+fancy_print "updating dotfiles remote..."
+git remote remove origin
+git remote add --mirror=push origin git@github.com:xvvvyz/dotfiles.git
 
 fancy_print "done!"

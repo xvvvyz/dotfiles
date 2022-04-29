@@ -1,6 +1,4 @@
-_fzf_compgen_path() { ag --hidden --smart-case -g .; }
-
-includes=(~/.zgen/zgen.zsh)
+includes=(~/.zgenom/zgenom.zsh)
 zsh_plugins=(subnixr/minimal)
 oh_my_zsh_plugins=(plugins/fzf)
 
@@ -20,6 +18,12 @@ fpath=(
   /opt/homebrew/share/zsh/site-functions
   $fpath
 )
+
+_fzf_compgen_path() {
+  ag --hidden --smart-case -g .
+}
+
+eval "$(brew shellenv)"
 
 unset HISTFILESIZE
 
@@ -48,14 +52,22 @@ alias grep="grep --color=auto"
 alias ls="exa --group-directories-first --git"
 alias v="nvim"
 
-for i in "${includes[@]}"; do [ -f "$i" ] && source "$i"; done
+for i in "${includes[@]}"; do
+  [ -f "$i" ] && source "$i"
+done
 
-if ! zgen saved; then
-  zgen selfupdate
-  for i in "${zsh_plugins[@]}"; do zgen load "$i"; done
-  for i in "${oh_my_zsh_plugins[@]}"; do zgen oh-my-zsh "$i"; done
-  zgen update
-  zgen save
+zgenom autoupdate
+
+if ! zgenom saved; then
+  for i in "${zsh_plugins[@]}"; do
+    zgenom load "$i"
+  done
+
+  for i in "${oh_my_zsh_plugins[@]}"; do
+    zgenom ohmyzsh "$i"
+  done
+
+  zgenom save
 fi
 
 gpgconf --launch gpg-agent

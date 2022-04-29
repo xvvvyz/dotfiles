@@ -8,4 +8,4 @@ export list_file_brew_casks=${list_dir}/brew-casks.txt
 export list_file_brew_packages=${list_dir}/brew-packages.txt
 export list_file_python_packages=${list_dir}/python-packages.txt
 export list_file_yarn_packages=${list_dir}/yarn-packages.txt
-export zgen_dir=~/.zgen
+export zgen_dir=~/.zgenom
