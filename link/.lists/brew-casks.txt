@@ -2,7 +2,6 @@ docker
 exifcleaner
 firefox-developer-edition
 font-hack
-google-chrome
 imageoptim
 little-snitch
 mpv
