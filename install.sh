@@ -7,18 +7,19 @@ source "$(dirname "$0")/link/.bin/utilities/fancy-ask"
 GLOBIGNORE=".:.."
 
 fancy_print "setting defaults..."
+defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write -g InitialKeyRepeat -int 15
 defaults write -g KeyRepeat -int 1
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+defaults write com.apple.TextEdit RichText -bool false
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-time-modifier -int 0
 defaults write com.apple.dock mineffect -string scale
 defaults write com.apple.dock orientation -string left
 defaults write com.apple.dock show-recents -bool false
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 defaults write com.apple.screencapture disable-shadow -bool true
 defaults write com.apple.screencapture show-thumbnail -bool false
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-defaults write com.apple.TextEdit RichText -bool false
 sudo defaults write /Library/Preferences/com.apple.loginwindow DisableFDEAutoLogin -bool YES
 killall Dock
 killall Finder
