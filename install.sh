@@ -60,8 +60,8 @@ brew services start skhd
 fancy_print "installing brew casks..."
 xargs brew install --cask < "${list_file_brew_casks}"
 
-fancy_print "installing yarn packages..."
-xargs yarn global add < "${list_file_yarn_packages}"
+fancy_print "installing npm packages..."
+xargs npm i -g < "${list_file_npm_packages}"
 
 fancy_print "installing python packages..."
 xargs pip3 install < "${list_file_python_packages}"

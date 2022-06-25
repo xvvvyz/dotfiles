@@ -20,8 +20,8 @@ sudo yabai --uninstall-sa
 sudo yabai --install-sa
 killall Dock
 
-fancy_print "updating yarn packages..."
-yarn global upgrade --latest --silent
+fancy_print "updating npm packages..."
+npm update -g
 
 fancy_print "updating python packages..."
 xargs pip3 install -U < "${list_file_python_packages}"

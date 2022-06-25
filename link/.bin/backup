@@ -9,8 +9,8 @@ brew leaves > "${list_file_brew_packages}"
 fancy_print "saving brew casks list..."
 brew list --cask > "${list_file_brew_casks}"
 
-fancy_print "saving yarn packages list..."
-yarn global list | grep -Eo '"[^"]+"' | sed -E 's/(@[^@]+$|")//g' > "${list_file_yarn_packages}"
+fancy_print "saving npm packages list..."
+npm list -g | grep -Eo ' [^@]+' | tr -d ' ' > "${list_file_npm_packages}"
 
 fancy_print "saving python packages list..."
 pipdeptree | grep -E '^\w+' | sed 's/==.*//' | grep -v 'drive-cli' > "${list_file_python_packages}"
