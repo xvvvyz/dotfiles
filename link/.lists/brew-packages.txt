@@ -1,6 +1,5 @@
 adns
 aom
-awscli
 coreutils
 dasel
 dav1d
@@ -29,6 +28,7 @@ pinentry-mac
 rename
 rustfmt
 rustup-init
+six
 the_silver_searcher
 tmux
 wget
