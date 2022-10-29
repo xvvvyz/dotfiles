@@ -14,12 +14,12 @@ gobject-introspection
 graphite2
 grep
 hopenpgp-tools
+jpeg
 koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 lame
 libssh2
 libtorrent-rakshasa
-libvterm
 luajit-openresty
 mpfr
 neovim

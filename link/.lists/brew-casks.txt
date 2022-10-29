@@ -9,4 +9,5 @@ mpv
 protonvpn
 qbittorrent
 signal
+spotify
 webstorm
