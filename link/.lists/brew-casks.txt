@@ -1,10 +1,7 @@
-docker
 exifcleaner
 firefox-developer-edition
 font-hack
 imageoptim
-kap
-little-snitch
 mpv
 protonvpn
 qbittorrent

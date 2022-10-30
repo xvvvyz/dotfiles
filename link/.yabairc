@@ -8,4 +8,4 @@ yabai -m config window_gap     20
 
 yabai -m config auto_balance off
 
-yabai -m rule --add app="^(System Preferences|Preview|Photo Booth|mpv|Authy Desktop|Kap)$" manage=off
+yabai -m rule --add app="^(System Settings|Preview|Photo Booth|mpv)$" manage=off

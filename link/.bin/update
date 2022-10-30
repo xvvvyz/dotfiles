@@ -15,9 +15,7 @@ brew upgrade
 fancy_print "starting brew services..."
 brew services start yabai
 
-fancy_print "reloading yabai..."
-sudo yabai --uninstall-sa
-sudo yabai --install-sa
+fancy_print "killing dock app..."
 killall Dock
 
 fancy_print "updating npm packages..."
