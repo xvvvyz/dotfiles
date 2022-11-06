@@ -3,6 +3,7 @@ firefox-developer-edition
 font-hack
 imageoptim
 mpv
+plex-media-server
 protonvpn
 qbittorrent
 signal
