@@ -1,24 +1,24 @@
-[alias]
-  bfg = !bfg
-  deploy = !~/.bin/git-deploy
-  unfuck = !git fsck && git remote prune origin && git gc
-[color]
-  ui = auto
-[commit]
-  gpgsign = true
-[core]
-  editor = nvim
-  excludesfile = ~/.config/git/gitignore
-  ignorecase = false
-[diff]
-  compactionHeuristic = true
-[github]
-  user = xvvvyz
-[pull]
-  rebase = true
-[push]
-  default = simple
 [user]
   name = Cade Scroggins
   email = git@cade.me
   signingkey = 158265D0
+[github]
+  user = xvvvyz
+[init]
+	defaultBranch = main
+[core]
+  editor = nvim
+  excludesfile = ~/.config/git/gitignore
+  ignorecase = false
+[color]
+  ui = auto
+[commit]
+  gpgsign = true
+[push]
+  default = simple
+[pull]
+  rebase = true
+[diff]
+  compactionHeuristic = true
+[alias]
+  deploy = !~/.bin/git-deploy
