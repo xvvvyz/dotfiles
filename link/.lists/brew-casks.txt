@@ -1,7 +1,8 @@
+descript
+docker
 exifcleaner
 firefox-developer-edition
 font-hack
-fujifilm-x-raw-studio
 imageoptim
 mpv
 plex-media-server
