@@ -9,21 +9,19 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'prettier/vim-prettier', { 'do': 'npm i' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'sheerun/vim-polyglot'
-Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'sirver/ultisnips'
 Plug 'tpope/vim-surround'
 call plug#end()
 
 let g:NERDSpaceDelims = 1
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:closetag_filenames = '*.html,*.md'
 let g:closetag_xhtml_filenames = '*.jsx'
-let g:deoplete#enable_at_startup = 1
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 2
 let g:fzf_buffers_jump = 1
@@ -35,6 +33,7 @@ let g:netrw_liststyle = 3
 let g:prettier#config#arrow_parens = 'always'
 let g:prettier#config#single_quote = 1
 let g:prettier#config#trailing_comma = 'es5'
+let g:python3_host_prog = '/opt/homebrew/bin/python3'
 let mapleader = " "
 
 set autoindent
