@@ -53,15 +53,11 @@ brew tap homebrew/cask-versions
 fancy_print "installing brew packages..."
 xargs brew install < "${list_file_brew_packages}"
 
-fancy_print "starting brew services..."
-brew services start yabai
-brew services start skhd
-
 fancy_print "installing brew casks..."
 xargs brew install --cask < "${list_file_brew_casks}"
 
 fancy_print "installing npm packages..."
-xargs npm i -g < "${list_file_npm_packages}"
+xargs pnpm i -g < "${list_file_npm_packages}"
 
 fancy_print "installing python packages..."
 xargs pip3 install < "${list_file_python_packages}"
