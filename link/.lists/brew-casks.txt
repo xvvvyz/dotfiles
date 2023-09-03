@@ -2,13 +2,10 @@ docker
 exifcleaner
 firefox-developer-edition
 font-hack
-google-chrome
 imageoptim
 mpv
-plex-media-server
 protonvpn
 qbittorrent
 signal
 spotify
 webstorm
-yubico-yubikey-manager
