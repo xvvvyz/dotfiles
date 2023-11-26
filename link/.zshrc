@@ -4,7 +4,6 @@ oh_my_zsh_plugins=(plugins/fzf)
 
 path=(
   $HOME/.bin
-  $HOME/.cargo/bin
   $HOME/.local/bin
   $HOME/Library/pnpm
   /opt/homebrew/bin
