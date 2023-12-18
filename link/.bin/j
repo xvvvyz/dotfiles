@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+mkdir -p ~/.journal
+cd ~/.journal
+file=$(date '+%Y-%m-%d')
+[[ "$1" == "edit" ]] && file="$2"
+gpg_file=$file.gpg
+[[ -f "$gpg_file" ]] && gpg $gpg_file
+$EDITOR $file
+gpg -er gpg@cade.me $file
+rm -f $file
+
+if [[ "$1" == "commit" ]]; then
+  git add .
+  git commit -m "$file"
+  git push
+fi
