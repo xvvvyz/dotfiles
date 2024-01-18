@@ -30,10 +30,11 @@ let g:fzf_tags_command = 'ctags -R'
 let g:limelight_conceal_ctermfg = '240'
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
+let g:node_host_prog = '~/.bun/bin/neovim-node-host'
 let g:prettier#config#arrow_parens = 'always'
 let g:prettier#config#single_quote = 1
 let g:prettier#config#trailing_comma = 'es5'
-let g:python3_host_prog = '/opt/homebrew/bin/python3'
+let g:python3_host_prog = '/usr/bin/python3'
 let mapleader = " "
 
 set autoindent

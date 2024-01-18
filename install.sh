@@ -46,9 +46,9 @@ fancy_print "installing homebrew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 fancy_print "tapping brew repos..."
-brew tap homebrew/cask-drivers
 brew tap homebrew/cask-fonts
 brew tap homebrew/cask-versions
+brew tap oven-sh/bun
 
 fancy_print "installing brew packages..."
 xargs brew install < "${list_file_brew_packages}"
@@ -57,10 +57,10 @@ fancy_print "installing brew casks..."
 xargs brew install --cask < "${list_file_brew_casks}"
 
 fancy_print "installing npm packages..."
-xargs pnpm i -g < "${list_file_npm_packages}"
+xargs bun i -g < "${list_file_npm_packages}"
 
 fancy_print "installing python packages..."
-xargs pip3 install < "${list_file_python_packages}"
+xargs python3 -m pip install < "${list_file_python_packages}"
 
 fancy_print "installing vim-plug..."
 curl --create-dirs -fsSLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

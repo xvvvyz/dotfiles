@@ -5,7 +5,8 @@ oh_my_zsh_plugins=(plugins/fzf)
 path=(
   $HOME/.bin
   $HOME/.local/bin
-  $HOME/Library/pnpm
+  $HOME/.bun/bin
+  $HOME/Library/Python/3.9/bin
   /opt/homebrew/bin
   /opt/homebrew/opt/coreutils/libexec/gnubin
   /opt/homebrew/opt/gnu-sed/libexec/gnubin
@@ -37,7 +38,6 @@ export HISTDUP=erase
 export HISTFILE=~/.zsh_history
 export HISTSIZE=10000000
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-export PNPM_HOME="$HOME/Library/pnpm"
 export SAVEHIST=10000000
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export VISUAL="nvim"

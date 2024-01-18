@@ -1,5 +1,8 @@
+future
+macholib
+neovim
 pip
 pipdeptree
-pynvim
 setuptools
+six
 wheel
