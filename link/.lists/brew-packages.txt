@@ -5,7 +5,7 @@ git
 koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 neovim
-node
+node@20
 oven-sh/bun/bun
 pass
 pinentry-mac

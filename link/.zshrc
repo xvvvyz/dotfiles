@@ -11,6 +11,7 @@ path=(
   /opt/homebrew/opt/coreutils/libexec/gnubin
   /opt/homebrew/opt/gnu-sed/libexec/gnubin
   /opt/homebrew/opt/grep/libexec/gnubin
+  /opt/homebrew/opt/node@20/bin
   /opt/homebrew/sbin
   $path
 )
