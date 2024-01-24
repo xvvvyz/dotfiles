@@ -7,10 +7,10 @@ fancy_print "updating brew packages..."
 brew upgrade
 
 fancy_print "updating npm packages..."
-pnpm -g up --latest
+bun x npm-check-updates -gu --install always -p bun -t latest
 
 fancy_print "updating python packages..."
-xargs pip3 install -U < "${list_file_python_packages}"
+xargs python3 -m pip install -U < "${list_file_python_packages}"
 
 fancy_print "updating neovim plugins..."
 nvim -c 'PlugUpgrade' -c 'PlugUpdate' -c 'UpdateRemotePlugins' -c 'qa!'
