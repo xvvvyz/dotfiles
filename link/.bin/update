@@ -7,7 +7,7 @@ fancy_print "updating brew packages..."
 brew upgrade
 
 fancy_print "updating npm packages..."
-bun x npm-check-updates -gu --install always -p bun -t latest
+bun update -g
 
 fancy_print "updating python packages..."
 xargs python3 -m pip install -U < "${list_file_python_packages}"
