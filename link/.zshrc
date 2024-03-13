@@ -6,6 +6,7 @@ path=(
   $HOME/.bin
   $HOME/.local/bin
   $HOME/.bun/bin
+  $HOME/.bun/_bun
   $HOME/Library/Python/3.9/bin
   /opt/homebrew/bin
   /opt/homebrew/opt/coreutils/libexec/gnubin
