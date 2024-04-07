@@ -56,11 +56,11 @@ xargs brew install < "${list_file_brew_packages}"
 fancy_print "installing brew casks..."
 xargs brew install --cask < "${list_file_brew_casks}"
 
-fancy_print "installing npm packages..."
-xargs bun i -g < "${list_file_npm_packages}"
+fancy_print "installing bun packages..."
+xargs bun i -g < "${list_file_bun_packages}"
 
-fancy_print "installing python packages..."
-xargs python3 -m pip install < "${list_file_python_packages}"
+fancy_print "installing pynvim..."
+pip3 install --break-system-packages --user pynvim
 
 fancy_print "installing vim-plug..."
 curl --create-dirs -fsSLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

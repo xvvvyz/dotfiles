@@ -52,7 +52,7 @@ setopt sharehistory
 bindkey -e
 
 alias grep="grep --color=auto"
-alias ls="exa --group-directories-first --git"
+alias ls="eza --group-directories-first --git"
 alias v="nvim"
 
 for i in "${includes[@]}"; do

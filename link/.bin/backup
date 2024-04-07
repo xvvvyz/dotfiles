@@ -9,8 +9,5 @@ brew leaves > "${list_file_brew_packages}"
 fancy_print "saving brew casks list..."
 brew list --cask > "${list_file_brew_casks}"
 
-fancy_print "saving npm packages list..."
-bun pm -g ls | tail -n +2 | grep -oE ' [^@]+' | tr -d ' ' > "${list_file_npm_packages}"
-
-fancy_print "saving python packages list..."
-pipdeptree | grep -E '^\w+' | sed 's/==.*//' | grep -v 'drive-cli' > "${list_file_python_packages}"
+fancy_print "saving bun packages list..."
+bun pm -g ls | tail -n +2 | grep -oE ' [^@]+' | tr -d ' ' > "${list_file_bun_packages}"

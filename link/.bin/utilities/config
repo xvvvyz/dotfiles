@@ -6,6 +6,5 @@ timestamp=$(date +%s)
 export dotfiles_dir=~/.dotfiles
 export list_file_brew_casks=${list_dir}/brew-casks.txt
 export list_file_brew_packages=${list_dir}/brew-packages.txt
-export list_file_npm_packages=${list_dir}/npm-packages.txt
-export list_file_python_packages=${list_dir}/python-packages.txt
+export list_file_bun_packages=${list_dir}/bun-packages.txt
 export zgen_dir=~/.zgenom

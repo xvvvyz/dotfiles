@@ -1,8 +1,0 @@
-future
-macholib
-neovim
-pip
-pipdeptree
-setuptools
-six
-wheel
