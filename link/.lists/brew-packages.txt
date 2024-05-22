@@ -1,13 +1,13 @@
 dialog
 eigen
 eza
-ffmpeg
 fzf
 git
 koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 libomp
 libyaml
+mpv
 neovim
 node@20
 oven-sh/bun/bun
