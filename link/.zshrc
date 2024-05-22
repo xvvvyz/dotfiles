@@ -1,6 +1,6 @@
 includes=(~/.zgenom/zgenom.zsh)
 zsh_plugins=(subnixr/minimal)
-oh_my_zsh_plugins=(plugins/fzf)
+oh_my_zsh_plugins=(zsh-fzf-history-search)
 
 path=(
   $HOME/.bin
@@ -27,6 +27,7 @@ _fzf_compgen_path() {
 }
 
 eval "$(brew shellenv)"
+eval "$(fzf --zsh)"
 
 unset HISTFILESIZE
 
