@@ -2,11 +2,11 @@ docker
 exifcleaner
 firefox-developer-edition
 font-hack
-google-chrome
 imageoptim
+jellyfin-media-player
 mpv
 protonvpn
-qbittorrent
 signal
 spotify
+stolendata-mpv
 webstorm
