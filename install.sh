@@ -46,8 +46,6 @@ fancy_print "installing homebrew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 fancy_print "tapping brew repos..."
-brew tap homebrew/cask-fonts
-brew tap homebrew/cask-versions
 brew tap oven-sh/bun
 
 fancy_print "installing brew packages..."
