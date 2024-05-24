@@ -4,16 +4,8 @@ oh_my_zsh_plugins=(zsh-fzf-history-search)
 
 path=(
   $HOME/.bin
-  $HOME/.local/bin
   $HOME/.bun/bin
-  $HOME/.bun/_bun
-  $HOME/Library/Python/3.9/bin
   /opt/homebrew/bin
-  /opt/homebrew/opt/coreutils/libexec/gnubin
-  /opt/homebrew/opt/gnu-sed/libexec/gnubin
-  /opt/homebrew/opt/grep/libexec/gnubin
-  /opt/homebrew/opt/node@20/bin
-  /opt/homebrew/sbin
   $path
 )
 
