@@ -9,7 +9,7 @@ libomp
 libyaml
 mpv
 neovim
-node@20
+node
 oven-sh/bun/bun
 pass
 pinentry-mac
