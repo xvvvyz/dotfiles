@@ -6,6 +6,27 @@ file=$(date '+%Y-%m-%d')
 [[ "$1" == "edit" ]] && file="$2"
 gpg_file=$file.gpg
 [[ -f "$gpg_file" ]] && gpg $gpg_file
+
+if [[ ! -f $file ]]; then
+cat > $file << EOL
+## What am I grateful for:
+
+## What do I want to accomplish today?
+
+## What obstacles I am going to face today?
+
+## How do I want to react to those obstacles?
+
+---  
+
+## Did I do the things I said I was going to do?    
+
+## Did I act virtuously today? If not, how can I do better next time?                                                  
+                                                                                                                    
+## What did I do wrong and how can I fix it?
+EOL
+fi
+
 $EDITOR $file
 gpg -er gpg@cade.me $file
 rm -f $file
