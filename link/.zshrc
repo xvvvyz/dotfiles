@@ -6,6 +6,7 @@ path=(
   $HOME/.bin
   $HOME/.bun/bin
   /opt/homebrew/bin
+  /opt/homebrew/opt/node@20/bin
   $path
 )
 
