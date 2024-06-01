@@ -19,10 +19,10 @@ cat > $file << EOL
 
 ---  
 
-## Did I do the things I said I was going to do?    
+## Did I do the things I said I was going to do?
 
-## Did I act virtuously today? If not, how can I do better next time?                                                  
-                                                                                                                    
+## Did I act virtuously today? If not, how can I do better next time?
+
 ## What did I do wrong and how can I fix it?
 EOL
 fi
