@@ -1,3 +1,4 @@
+deepl
 docker
 exifcleaner
 firefox
@@ -8,3 +9,4 @@ protonvpn
 signal
 spotify
 webstorm
+whatsapp
