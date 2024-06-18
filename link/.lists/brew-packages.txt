@@ -3,6 +3,7 @@ eigen
 eza
 fzf
 git
+jsoncpp
 koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 libomp

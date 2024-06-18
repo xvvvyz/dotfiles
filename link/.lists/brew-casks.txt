@@ -6,6 +6,7 @@ font-hack
 imageoptim
 jellyfin-media-player
 protonvpn
+screen-studio
 signal
 spotify
 webstorm
