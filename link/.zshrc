@@ -1,6 +1,10 @@
-includes=(~/.zgenom/zgenom.zsh)
 zsh_plugins=(subnixr/minimal)
 oh_my_zsh_plugins=(zsh-fzf-history-search)
+
+includes=(
+  $HOME/.bun/_bun
+  $HOME/.zgenom/zgenom.zsh
+)
 
 path=(
   $HOME/.bin
@@ -69,3 +73,4 @@ fi
 
 gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye &> /dev/null
+
