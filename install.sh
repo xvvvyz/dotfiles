@@ -21,6 +21,8 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 defaults write com.apple.screencapture disable-shadow -bool true
 defaults write com.apple.screencapture show-thumbnail -bool false
 sudo defaults write /Library/Preferences/com.apple.loginwindow DisableFDEAutoLogin -bool YES
+sudo pmset -a hibernatemode 25
+sudo pmset -a standbydelay 15
 killall Dock
 killall Finder
 
@@ -44,9 +46,6 @@ source ~/.zshrc
 
 fancy_print "installing homebrew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-fancy_print "tapping brew repos..."
-brew tap oven-sh/bun
 
 fancy_print "installing brew packages..."
 xargs brew install < "${list_file_brew_packages}"
