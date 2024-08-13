@@ -1,38 +1,54 @@
 #!/usr/bin/env zsh
 
-mkdir -p ~/.journal
-cd ~/.journal
-file=$(date '+%Y-%m-%d')
-[[ "$1" == "edit" ]] && file="$2"
-gpg_file=$file.gpg
-[[ -f "$gpg_file" ]] && gpg $gpg_file
+date=$(date '+%Y-%m-%d')
+dir=~/.journal
+email=gpg@cade.me
+tarball=data.tgz.gpg
 
-if [[ ! -f $file ]]; then
-cat > $file << EOL
-## What am I grateful for:
+mkdir -p $dir
+cd $dir
 
-## What do I want to accomplish today?
+if [[ $1 == "commit" ]]; then
+  if [[ -f $tarball ]]; then
+    echo "tarball already exists... bailing!"
+    exit 1
+  fi
 
-## What obstacles I am going to face today?
+  find . -depth 1 -type f ! -name $tarball \
+    | tar cvf - -T - \
+    | gzip -9 \
+    | gpg -er $email -o $tarball
 
-## How do I want to react to those obstacles?
+  git add $tarball
 
----  
+  if git log --pretty=format:"%s" | grep -qF $date; then
+    git commit --amend --no-edit
+    git push -f
+  else
+    git commit -m $date
+    git push
+  fi
 
-## Did I do the things I said I was going to do?
+  find . -depth 1 -type f ! -name $tarball -exec rm -f {} +
+  exit
+fi
 
-## Did I act virtuously today? If not, how can I do better next time?
+if [[ -f $tarball ]]; then
+  gpg -d $tarball | tar xvf -
+  rm -f $tarball
+fi
 
-## What did I do wrong and how can I fix it?
+if [[ ! -f $date ]]; then
+cat > $date << EOL
+What am I grateful for?
+What do I want to accomplish today?
+What obstacles I am going to face today?
+How do I want to react to those obstacles?
+Did I do the things I said I was going to do?
+Did I act virtuously today? If not, how can I do better next time?
+What did I do wrong and how can I fix it?
+General notes?
 EOL
 fi
 
-$EDITOR $file
-gpg -er gpg@cade.me $file
-rm -f $file
-
-if [[ "$1" == "commit" ]]; then
-  git add .
-  git commit -m "$file"
-  git push
-fi
+$EDITOR $date
