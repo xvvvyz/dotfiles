@@ -9,6 +9,7 @@ includes=(
 path=(
   $HOME/.bin
   $HOME/.bun/bin
+  $HOME/.local/bin
   /opt/homebrew/bin
   /opt/homebrew/opt/node@20/bin
   $path
