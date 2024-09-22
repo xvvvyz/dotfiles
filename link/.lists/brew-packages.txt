@@ -3,6 +3,7 @@ eigen
 eza
 fzf
 git
+gnupg
 koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 libomp
@@ -11,11 +12,12 @@ mpv
 neovim
 node@20
 oven-sh/bun/bun
-pass
 pinentry-mac
+pipx
 protobuf
 pybind11
 rename
 sleef
 the_silver_searcher
 tmux
+wget

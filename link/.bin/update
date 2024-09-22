@@ -9,6 +9,9 @@ brew upgrade
 fancy_print "updating brew casks..."
 brew upgrade --casks
 
+fancy_print "cleaning up brew packages..."
+brew cleanup
+
 fancy_print "updating bun packages..."
 xargs bun i -g < "${list_file_bun_packages}"
 
