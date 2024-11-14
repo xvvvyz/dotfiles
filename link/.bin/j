@@ -29,7 +29,12 @@ if [[ $1 == "commit" ]]; then
     git push
   fi
 
-  find . -depth 1 -type f ! -name $tarball -exec rm -f {} +
+  find . \
+    -depth 1 \
+    -type f \
+    ! -name $tarball \
+    ! -name README.md \
+    -exec rm -f {} +
   exit
 fi
 
