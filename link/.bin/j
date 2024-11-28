@@ -3,6 +3,7 @@
 date=$(date '+%Y-%m-%d')
 dir=~/.journal
 email=gpg@cade.me
+readme=README.md
 tarball=data.tgz.gpg
 
 mkdir -p $dir
@@ -14,7 +15,11 @@ if [[ $1 == "commit" ]]; then
     exit 1
   fi
 
-  find . -depth 1 -type f ! -name $tarball \
+  find . \
+    -depth 1 \
+    -type f \
+    ! -name $tarball \
+    ! -name $readme \
     | tar cvf - -T - \
     | gzip -9 \
     | gpg -er $email -o $tarball
@@ -33,7 +38,7 @@ if [[ $1 == "commit" ]]; then
     -depth 1 \
     -type f \
     ! -name $tarball \
-    ! -name README.md \
+    ! -name $readme \
     -exec rm -f {} +
   exit
 fi
