@@ -44,8 +44,10 @@ if [[ $1 == "commit" ]]; then
 fi
 
 if [[ -f $tarball ]]; then
-  gpg -d $tarball | tar xvf -
-  rm -f $tarball
+  gpg $tarball || exit 1
+  decrypted=${tarball%.gpg}
+  tar xvf $decrypted || exit 1
+  rm -f $tarball $decrypted
 fi
 
 if [[ ! -f $date ]]; then
