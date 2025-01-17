@@ -2,7 +2,9 @@ deepl
 docker
 firefox
 font-hack
+google-chrome
 imageoptim
+jellyfin-media-player
 protonvpn
 screen-studio
 signal
