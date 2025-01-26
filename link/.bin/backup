@@ -10,4 +10,10 @@ fancy_print "saving brew casks list..."
 brew list --cask > "${list_file_brew_casks}"
 
 fancy_print "saving bun packages list..."
-bun pm -g ls | tail -n +2 | grep -oE ' [^@]+' | tr -d ' ' > "${list_file_bun_packages}"
+bun pm ls -g \
+  | sed '1d' \
+  | sed -r 's/\x1b\[[0-9;]*m//g' \
+  | awk '{print substr($0, 11)}' \
+  | awk -F'@' '{print $1}' \
+  | sed '/^$/d' \
+  > "${list_file_bun_packages}"
