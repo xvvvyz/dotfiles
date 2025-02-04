@@ -8,4 +8,4 @@ yabai -m config window_gap     20
 
 yabai -m config auto_balance off
 
-yabai -m rule --add app="^(System Settings|Activity Monitor|Preview|Photo Booth|mpv|ProtonVPN|Screen Studio|DeepL)$" manage=off
+yabai -m rule --add app="^(System Settings|Activity Monitor|Preview|Photo Booth|mpv|ProtonVPN|Screen Studio|DeepL|Logi Options\+)$" manage=off
