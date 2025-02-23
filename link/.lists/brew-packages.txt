@@ -4,6 +4,7 @@ eza
 fzf
 git
 gnupg
+icu4c@75
 koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 libomp
