@@ -1,3 +1,4 @@
+aldente
 deepl
 docker
 firefox
