@@ -1,6 +1,6 @@
-aldente
+cursor
 deepl
-docker
+figma
 firefox
 font-hack
 google-chrome
@@ -11,5 +11,4 @@ protonvpn
 screen-studio
 signal
 spotify
-webstorm
 whatsapp
