@@ -21,4 +21,5 @@ rename
 sleef
 the_silver_searcher
 tmux
+watchman
 wget

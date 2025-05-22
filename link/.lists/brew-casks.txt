@@ -1,5 +1,5 @@
+android-studio
 cursor
-deepl
 figma
 firefox
 font-hack
@@ -12,3 +12,4 @@ screen-studio
 signal
 spotify
 whatsapp
+zulu@17
