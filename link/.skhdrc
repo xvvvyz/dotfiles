@@ -30,6 +30,3 @@ shift + alt + cmd - backspace : \
   yabai -m space --padding abs:20:20:20:20; \
   yabai -m space --gap abs:20; \
   yabai -m space --balance
-
-cmd - return : open -a Terminal
-shift + cmd - return : open -a Firefox
