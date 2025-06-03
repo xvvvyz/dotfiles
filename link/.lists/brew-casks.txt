@@ -1,6 +1,5 @@
 android-studio
 cursor
-figma
 firefox
 font-hack
 google-chrome
