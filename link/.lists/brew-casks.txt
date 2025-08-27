@@ -1,14 +1,4 @@
-android-studio
 cursor
 firefox
 font-hack
-google-chrome
-imageoptim
 jellyfin-media-player
-logi-options+
-protonvpn
-screen-studio
-signal
-spotify
-whatsapp
-zulu@17
