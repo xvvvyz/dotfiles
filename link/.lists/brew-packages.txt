@@ -4,8 +4,6 @@ eza
 fzf
 git
 gnupg
-koekeishiya/formulae/skhd
-koekeishiya/formulae/yabai
 mpv
 neovim
 node

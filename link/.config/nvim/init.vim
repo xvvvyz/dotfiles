@@ -66,7 +66,6 @@ set wrapmargin=0
 
 highlight VertSplit cterm=NONE
 
-inoremap <silent> <c-s> <c-o>:update<cr>
 nmap ga <Plug>(EasyAlign)
 nnoremap , @@
 nnoremap <ScrollWheelDown> 3<c-E>

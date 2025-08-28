@@ -1,4 +1,3 @@
 cursor
 firefox
-font-hack
 jellyfin-media-player
