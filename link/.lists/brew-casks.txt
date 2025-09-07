@@ -1,3 +1,4 @@
 cursor
 firefox
 jellyfin-media-player
+signal

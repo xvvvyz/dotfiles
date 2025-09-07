@@ -6,7 +6,7 @@ git
 gnupg
 mpv
 neovim
-node
+node@22
 oven-sh/bun/bun
 pinentry-mac
 the_silver_searcher
