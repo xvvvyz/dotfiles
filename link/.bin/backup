@@ -3,11 +3,13 @@
 source "$(dirname "$0")/utilities/config"
 source "$(dirname "$0")/utilities/fancy-print"
 
+mkdir -p "${list_dir}"
+
 fancy_print "saving brew packages list..."
-brew leaves > "${list_file_brew_packages}"
+brew leaves > "${list_file_brew_packages}" 2>/dev/null || true
 
 fancy_print "saving brew casks list..."
-brew list --cask > "${list_file_brew_casks}"
+brew list --cask > "${list_file_brew_casks}" 2>/dev/null || true
 
 fancy_print "saving bun packages list..."
 bun pm ls -g \

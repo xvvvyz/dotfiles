@@ -34,7 +34,7 @@ let g:node_host_prog = '~/.bun/bin/neovim-node-host'
 let g:prettier#config#arrow_parens = 'always'
 let g:prettier#config#single_quote = 1
 let g:prettier#config#trailing_comma = 'es5'
-let g:python3_host_prog = '/opt/homebrew/bin/python3'
+let g:python3_host_prog = system('which python3')->trim()
 let mapleader = " "
 
 set autoindent
