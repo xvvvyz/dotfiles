@@ -14,12 +14,17 @@ if [[ -d ~/.config ]]; then
   rm -rf ~/.config
 fi
 
+fancy_print "removing existing .gnupg/.ssh..."
+rm -rf ~/.gnupg ~/.ssh
+
 fancy_print "symlinking dotfiles (excluding .gnupg)..."
 for src in $(find "$(pwd)/link" -maxdepth 1 -mindepth 1 -name ".*" | sort); do
   base="$(basename "$src")"
+
   if [[ "$base" == "." || "$base" == ".." || "$base" == ".gnupg" ]]; then
     continue
   fi
+
   ln -svfn "$src" "$HOME/$base"
 done
 
