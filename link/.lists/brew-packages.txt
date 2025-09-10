@@ -1,4 +1,3 @@
-codex
 dialog
 eza
 fzf
