@@ -30,7 +30,6 @@ export GREP_COLOR="1;32"
 export HISTDUP=erase
 export HISTFILE=~/.zsh_history
 export HISTSIZE=10000000
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export SAVEHIST=10000000
 export VISUAL="nvim"
 export ZGEN_RESET_ON_CHANGE=("$HOME/.zshrc")
@@ -79,6 +78,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 
   export ANDROID_HOME="$HOME/Library/Android/sdk"
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
+  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
   eval "$(brew shellenv)"
