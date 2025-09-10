@@ -28,3 +28,7 @@ link/.gnupg/*
 !link/.gnupg/gpg-agent.conf
 !link/.gnupg/gpg.conf
 !link/.gnupg/sshcontrol
+
+link/.ssh/*
+!link/.ssh/allowed_signers
+!link/.ssh/authorized_keys
