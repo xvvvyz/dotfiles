@@ -25,8 +25,7 @@ export EDITOR="nvim"
 export FZF_COMPLETION_TRIGGER="**"
 export FZF_DEFAULT_COMMAND="ag --vimgrep --hidden --smart-case -g ."
 export FZF_DEFAULT_OPTS="--exact --inline-info"
-export GPG_TTY="$(tty)"
-export GREP_COLOR="1;32"
+export GREP_COLORS="mt=1;32"
 export HISTDUP=erase
 export HISTFILE=~/.zsh_history
 export HISTSIZE=10000000
@@ -77,6 +76,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   )
 
   export ANDROID_HOME="$HOME/Library/Android/sdk"
+  export GPG_TTY="$(tty)"
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
   export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
@@ -86,3 +86,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
   gpgconf --launch gpg-agent
   gpg-connect-agent updatestartuptty /bye &> /dev/null
 fi
+
+# bun completions
+[ -s "/home/cade/.bun/_bun" ] && source "/home/cade/.bun/_bun"

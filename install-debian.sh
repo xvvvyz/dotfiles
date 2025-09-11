@@ -18,15 +18,8 @@ fancy_print "removing existing .gnupg/.ssh..."
 rm -rf ~/.gnupg ~/.ssh
 
 fancy_print "symlinking dotfiles (excluding .gnupg)..."
-for src in $(find "$(pwd)/link" -maxdepth 1 -mindepth 1 -name ".*" | sort); do
-  base="$(basename "$src")"
-
-  if [[ "$base" == "." || "$base" == ".." || "$base" == ".gnupg" ]]; then
-    continue
-  fi
-
-  ln -svfn "$src" "$HOME/$base"
-done
+ln -svfn "$(pwd)/link/."??* ~
+rm -f ~/.gnupg
 
 fancy_print "installing zgenom..."
 git clone https://github.com/jandamm/zgenom.git "$zgen_dir" 2>/dev/null || true
@@ -35,21 +28,13 @@ fancy_print "updating apt cache..."
 sudo apt-get update -y
 
 fancy_print "installing apt packages..."
-if [[ -f "${list_file_apt_packages}" ]]; then
-  xargs -a "${list_file_apt_packages}" sudo apt-get install -y
-else
-  fancy_print "apt packages list not found at ${list_file_apt_packages}"
-fi
+xargs -a "${list_file_apt_packages}" sudo apt-get install -y
 
 fancy_print "setting zsh as default shell..."
 chsh -s "$(command -v zsh)" "$USER"
 
 fancy_print "installing bun..."
-if ! command -v bun >/dev/null 2>&1; then
-  curl -fsSL https://bun.sh/install | bash
-  export BUN_INSTALL="$HOME/.bun"
-  export PATH="$BUN_INSTALL/bin:$PATH"
-fi
+curl -fsSL https://bun.sh/install | bash
 
 fancy_print "installing bun packages..."
 xargs bun i -g < "${list_file_bun_packages}"
