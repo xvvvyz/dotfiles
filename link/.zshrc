@@ -66,7 +66,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
     $HOME/Library/Android/sdk/emulator
     $HOME/Library/Android/sdk/platform-tools
     /opt/homebrew/bin
-    /opt/homebrew/opt/node@20/bin
+    /opt/homebrew/opt/node@22/bin
     $path
   )
 
