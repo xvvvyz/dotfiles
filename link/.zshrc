@@ -82,9 +82,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
   eval "$(brew shellenv)"
-
-  gpgconf --launch gpg-agent
-  gpg-connect-agent updatestartuptty /bye &> /dev/null
 fi
 
 # bun completions
