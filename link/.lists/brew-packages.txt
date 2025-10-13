@@ -1,6 +1,7 @@
 colima
 dialog
 docker
+docker-buildx
 eza
 fzf
 git

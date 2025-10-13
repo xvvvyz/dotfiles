@@ -25,6 +25,9 @@ link/.config/gh/*
 link/.config/nvim/*
 !link/.config/nvim/init.vim
 
+link/.docker/*
+!link/.docker/config.json
+
 link/.gnupg/*
 !link/.gnupg/gpg-agent.conf
 !link/.gnupg/gpg.conf
