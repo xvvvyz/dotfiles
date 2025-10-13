@@ -1,4 +1,6 @@
+colima
 dialog
+docker
 eza
 fzf
 git

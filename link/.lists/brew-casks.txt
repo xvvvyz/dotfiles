@@ -1,4 +1,7 @@
 cursor
 firefox
+imageoptim
 jellyfin-media-player
+protonvpn
 signal
+spotify
