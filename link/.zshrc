@@ -10,6 +10,7 @@ path=(
   $HOME/.bin
   $HOME/.bun/bin
   $HOME/.local/bin
+  "$(python3 -m site --user-base)/bin"
   $path
 )
 
