@@ -10,7 +10,6 @@ path=(
   $HOME/.bin
   $HOME/.bun/bin
   $HOME/.local/bin
-  "$(python3 -m site --user-base)/bin"
   $path
 )
 
@@ -38,11 +37,11 @@ setopt appendhistory
 setopt incappendhistory
 setopt sharehistory
 
-bindkey -e
-
 alias grep="grep --color=auto"
 alias ls="eza --group-directories-first --git"
 alias v="nvim"
+
+bindkey -e
 
 for i in "${includes[@]}"; do
   [ -f "$i" ] && source "$i"

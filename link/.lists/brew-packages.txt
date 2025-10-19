@@ -11,5 +11,6 @@ neovim
 node@22
 oven-sh/bun/bun
 pinentry-mac
+python@3.12
 the_silver_searcher
 tmux

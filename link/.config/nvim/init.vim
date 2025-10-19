@@ -31,7 +31,6 @@ let g:limelight_conceal_ctermfg = '240'
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:node_host_prog = '~/.bun/bin/neovim-node-host'
-let g:python3_host_prog = system('which python3')->trim()
 let mapleader = " "
 
 set autoindent
