@@ -77,6 +77,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 
   export ANDROID_HOME="$HOME/Library/Android/sdk"
   export GPG_TTY="$(tty)"
+  export HOMEBREW_NO_ENV_HINTS=1
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
   export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
