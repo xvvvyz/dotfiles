@@ -19,3 +19,6 @@ bun pm ls -g \
   | awk -F'@' '{print $1}' \
   | sed '/^$/d' \
   > "${list_file_bun_packages}"
+
+fancy_print "saving uv tools list..."
+uv tool list | grep -v '^-' | awk '{print $1}' > "${list_file_uv_tools}"

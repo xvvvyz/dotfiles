@@ -1,5 +1,5 @@
+cloudflared
 colima
-dialog
 docker
 docker-buildx
 eza
@@ -8,9 +8,9 @@ git
 gnupg
 mpv
 neovim
-node@22
+node
 oven-sh/bun/bun
 pinentry-mac
-python@3.12
 the_silver_searcher
 tmux
+uv
