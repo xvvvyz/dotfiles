@@ -1,5 +1,6 @@
 cloudflared
 colima
+dialog
 docker
 docker-buildx
 eza
