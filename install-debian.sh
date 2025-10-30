@@ -25,7 +25,7 @@ fancy_print "installing zgenom..."
 git clone https://github.com/jandamm/zgenom.git "$zgen_dir" 2>/dev/null || true
 
 fancy_print "updating apt cache..."
-sudo apt-get update -y
+sudo apt update
 
 fancy_print "installing apt packages..."
 xargs -a "${list_file_apt_packages}" sudo apt-get install -y

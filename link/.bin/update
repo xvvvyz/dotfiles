@@ -3,20 +3,36 @@
 source "$(dirname "$0")/utilities/config"
 source "$(dirname "$0")/utilities/fancy-print"
 
-fancy_print "updating brew packages..."
-brew upgrade
+if command -v brew; then
+  fancy_print "updating brew packages..."
+  brew upgrade
 
-fancy_print "updating brew casks..."
-brew upgrade --casks
+  fancy_print "updating brew casks..."
+  brew upgrade --casks
 
-fancy_print "cleaning up brew packages..."
-brew cleanup
+  fancy_print "cleaning up brew packages..."
+  brew cleanup
+fi
 
-fancy_print "updating bun packages..."
-xargs bun i -g < "${list_file_bun_packages}"
+if command -v apt; then
+  fancy_print "updating apt cache..."
+  sudo apt update
 
-fancy_print "updating uv tools..."
-uv tool upgrade --all
+  fancy_print "upgrading apt packages..."
+  sudo apt upgrade -y
+fi
 
-fancy_print "updating neovim plugins..."
-nvim -c 'PlugUpgrade' -c 'PlugUpdate' -c 'UpdateRemotePlugins' -c 'qa!'
+if command -v bun; then
+  fancy_print "updating bun packages..."
+  xargs bun i -g < "${list_file_bun_packages}"
+fi
+
+if command -v uv; then
+  fancy_print "updating uv tools..."
+  uv tool upgrade --all
+fi
+
+if command -v nvim; then
+  fancy_print "updating neovim plugins..."
+  nvim -c 'PlugUpgrade' -c 'PlugUpdate' -c 'UpdateRemotePlugins' -c 'qa!'
+fi

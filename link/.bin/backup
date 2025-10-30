@@ -5,20 +5,26 @@ source "$(dirname "$0")/utilities/fancy-print"
 
 mkdir -p "${list_dir}"
 
-fancy_print "saving brew packages list..."
-brew leaves > "${list_file_brew_packages}" 2>/dev/null || true
+if command -v brew; then
+  fancy_print "saving brew packages list..."
+  brew leaves > "${list_file_brew_packages}" 2>/dev/null || true
 
-fancy_print "saving brew casks list..."
-brew list --cask > "${list_file_brew_casks}" 2>/dev/null || true
+  fancy_print "saving brew casks list..."
+  brew list --cask > "${list_file_brew_casks}" 2>/dev/null || true
+fi
 
-fancy_print "saving bun packages list..."
-bun pm ls -g \
-  | sed '1d' \
-  | sed -r 's/\x1b\[[0-9;]*m//g' \
-  | awk '{print substr($0, 11)}' \
-  | awk -F'@' '{print $1}' \
-  | sed '/^$/d' \
-  > "${list_file_bun_packages}"
+if command -v bun; then
+  fancy_print "saving bun packages list..."
+  bun pm ls -g \
+    | sed '1d' \
+    | sed -r 's/\x1b\[[0-9;]*m//g' \
+    | awk '{print substr($0, 11)}' \
+    | awk -F'@' '{print $1}' \
+    | sed '/^$/d' \
+    > "${list_file_bun_packages}"
+fi
 
-fancy_print "saving uv tools list..."
-uv tool list | grep -v '^-' | awk '{print $1}' > "${list_file_uv_tools}"
+if command -v uv; then
+  fancy_print "saving uv tools list..."
+  uv tool list | grep -v '^-' | awk '{print $1}' > "${list_file_uv_tools}"
+fi
