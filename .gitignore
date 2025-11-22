@@ -25,6 +25,9 @@ link/.config/gh/*
 link/.config/nvim/*
 !link/.config/nvim/init.vim
 
+link/.config/zed/*
+!link/.config/zed/settings.json
+
 link/.docker/*
 !link/.docker/config.json
 

@@ -3,5 +3,7 @@ firefox
 imageoptim
 jellyfin-media-player
 protonvpn
+qbittorrent
 signal
 spotify
+zed
