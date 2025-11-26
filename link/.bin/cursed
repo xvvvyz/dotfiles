@@ -1,0 +1,205 @@
+#!/usr/bin/env zsh
+
+set -e
+set -u
+set -o pipefail
+
+CURSOR_DIR="$HOME/Library/Application Support/Cursor"
+CURSOR_PROFILES_DIR="$HOME/Library/Application Support/CursorProfiles"
+DOT_CURSOR="$HOME/.cursor"
+DOT_CURSOR_PROFILES="$HOME/.cursor-profiles"
+
+usage() {
+  cat <<EOF
+Usage:
+  cursed init <profile>   Using the current config, create a profile.
+  cursed <profile>        Switch to a profile and open Cursor.
+  cursed ls               List available profiles.
+  cursed mv <old> <new>   Rename a profile.
+  cursed -h               Help!
+EOF
+}
+
+ensure_profile_roots() {
+  mkdir -p "$CURSOR_PROFILES_DIR" "$DOT_CURSOR_PROFILES"
+}
+
+is_cursor_running() {
+  pgrep -x "Cursor" >/dev/null 2>&1
+}
+
+abort_if_running() {
+  if is_cursor_running; then
+    echo "Cursor is currently running. Quit it before switching or modifying profiles." >&2
+    exit 1
+  fi
+}
+
+open_cursor() {
+  open -a "Cursor"
+}
+
+list_profiles() {
+  ensure_profile_roots
+  typeset -A in_cursor in_dot
+  local d base
+
+  if [[ -d "$CURSOR_PROFILES_DIR" ]]; then
+    for d in "$CURSOR_PROFILES_DIR"/*(/N); do
+      base="${d:t}"
+      in_cursor[$base]=1
+    done
+  fi
+  if [[ -d "$DOT_CURSOR_PROFILES" ]]; then
+    for d in "$DOT_CURSOR_PROFILES"/*(/N); do
+      base="${d:t}"
+      in_dot[$base]=1
+    done
+  fi
+
+  local active=""
+  if [[ -L "$CURSOR_DIR" ]]; then
+    active="$(basename "$(readlink "$CURSOR_DIR")")"
+  fi
+
+  for base in ${(ok)in_cursor}; do
+    if [[ -n "${in_dot[$base]-}" ]]; then
+      if [[ "$base" == "$active" ]]; then
+        print "* $base"
+      else
+        print "  $base"
+      fi
+    fi
+  done
+}
+
+switch_one() {
+  local main="$1"
+  local profiles="$2"
+  local name="$3"
+  ensure_profile_roots
+  local target="$profiles/$name"
+
+  if [[ ! -d "$target" ]]; then
+    echo "Profile '$name' not found for $main" >&2
+    return 1
+  fi
+  if [[ -e "$main" && ! -L "$main" ]]; then
+    echo "$main exists and is not a symlink" >&2
+    return 1
+  fi
+
+  rm -f -- "$main"
+  ln -s "$target" "$main"
+}
+
+init_one() {
+  local main="$1"
+  local profiles="$2"
+  local name="$3"
+  ensure_profile_roots
+  local target="$profiles/$name"
+  mkdir -p "$profiles"
+
+  if [[ -e "$target" ]]; then
+    echo "Profile '$name' already exists at $target" >&2
+    return 1
+  fi
+
+  if [[ -L "$main" ]]; then
+    local current_target
+    current_target="$(readlink "$main")"
+    (
+      cd "$(dirname "$main")"
+      cp -R "$current_target" "$target"
+    )
+    rm -- "$main"
+    ln -s "$target" "$main"
+  elif [[ -e "$main" ]]; then
+    mv "$main" "$target"
+    ln -s "$target" "$main"
+  else
+    mkdir -p "$target"
+    ln -s "$target" "$main"
+  fi
+}
+
+rename_profile() {
+  local old="$1"
+  local new="$2"
+  ensure_profile_roots
+
+  local old_app="$CURSOR_PROFILES_DIR/$old"
+  local old_dot="$DOT_CURSOR_PROFILES/$old"
+  local new_app="$CURSOR_PROFILES_DIR/$new"
+  local new_dot="$DOT_CURSOR_PROFILES/$new"
+
+  if [[ ! -d "$old_app" || ! -d "$old_dot" ]]; then
+    echo "Profile '$old' does not exist in both profile directories." >&2
+    exit 1
+  fi
+  if [[ -e "$new_app" || -e "$new_dot" ]]; then
+    echo "Profile '$new' already exists." >&2
+    exit 1
+  fi
+
+  mv "$old_app" "$new_app"
+  mv "$old_dot" "$new_dot"
+
+  if [[ -L "$CURSOR_DIR" ]]; then
+    local active="$(basename "$(readlink "$CURSOR_DIR")")"
+    if [[ "$active" == "$old" ]]; then
+      rm -f "$CURSOR_DIR"
+      ln -s "$new_app" "$CURSOR_DIR"
+    fi
+  fi
+
+  if [[ -L "$DOT_CURSOR" ]]; then
+    local active_d="$(basename "$(readlink "$DOT_CURSOR")")"
+    if [[ "$active_d" == "$old" ]]; then
+      rm -f "$DOT_CURSOR"
+      ln -s "$new_dot" "$DOT_CURSOR"
+    fi
+  fi
+}
+
+main() {
+  if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+    usage
+    exit 0
+  fi
+
+  local cmd="$1"
+  shift || true
+
+  case "$cmd" in
+    ls)
+      [[ $# -ne 0 ]] && usage && exit 1
+      list_profiles
+      ;;
+
+    init)
+      [[ $# -ne 1 ]] && usage && exit 1
+      abort_if_running
+      init_one "$CURSOR_DIR" "$CURSOR_PROFILES_DIR" "$1"
+      init_one "$DOT_CURSOR" "$DOT_CURSOR_PROFILES" "$1"
+      open_cursor
+      ;;
+
+    mv)
+      [[ $# -ne 2 ]] && usage && exit 1
+      abort_if_running
+      rename_profile "$1" "$2"
+      ;;
+
+    *)
+      [[ $# -ne 0 ]] && usage && exit 1
+      abort_if_running
+      switch_one "$CURSOR_DIR" "$CURSOR_PROFILES_DIR" "$cmd"
+      switch_one "$DOT_CURSOR" "$DOT_CURSOR_PROFILES" "$cmd"
+      open_cursor
+      ;;
+  esac
+}
+
+main "$@"

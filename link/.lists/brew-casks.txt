@@ -6,4 +6,3 @@ protonvpn
 qbittorrent
 signal
 spotify
-zed

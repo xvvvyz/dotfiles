@@ -60,6 +60,8 @@ set wildmenu
 set wrap
 set wrapmargin=0
 
+highlight Normal guibg=NONE ctermbg=NONE
+highlight NormalFloat guibg=NONE ctermbg=NONE
 highlight VertSplit cterm=NONE
 
 nmap ga <Plug>(EasyAlign)
