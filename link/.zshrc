@@ -9,6 +9,7 @@ includes=(
 path=(
   $HOME/.bin
   $HOME/.bun/bin
+  $HOME/.fzf/bin
   $HOME/.local/bin
   $path
 )
@@ -55,7 +56,7 @@ if ! zgenom saved; then
   done
 
   for i in "${oh_my_zsh_plugins[@]}"; do
-    zgenom ohmyzsh "$i"
+    zgenom ohmyzsh plugins "$i"
   done
 
   zgenom save
@@ -85,5 +86,9 @@ if [[ "$OSTYPE" == darwin* ]]; then
   eval "$(brew shellenv)"
 fi
 
-# bun completions
-[ -s "/home/cade/.bun/_bun" ] && source "/home/cade/.bun/_bun"
+if grep -qi microsoft /proc/version &>/dev/null; then
+  export GPG_TTY="$(tty)"
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+
+  gpg-connect-agent updatestartuptty /bye &>/dev/null
+fi

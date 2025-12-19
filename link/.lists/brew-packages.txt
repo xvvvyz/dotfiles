@@ -5,6 +5,7 @@ docker
 docker-buildx
 eza
 fzf
+gh
 git
 gnupg
 mpv

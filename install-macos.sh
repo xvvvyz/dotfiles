@@ -38,6 +38,10 @@ rm -rf ~/.gnupg ~/.ssh
 fancy_print "symlinking dotfiles..."
 ln -svfn "$(pwd)/link/."??* ~
 
+fancy_print "symlinking pinentry to /usr/local/bin..."
+mkdir -p /usr/local/bin
+sudo ln -svfn ~/.bin/pinentry /usr/local/bin/pinentry
+
 fancy_print "installing zgenom..."
 git clone https://github.com/jandamm/zgenom.git "$zgen_dir"
 
@@ -56,8 +60,8 @@ xargs brew install --cask < "${list_file_brew_casks}"
 fancy_print "installing bun packages..."
 xargs bun i -g < "${list_file_bun_packages}"
 
-fancy_print "installing pynvim..."
-pip3 install --break-system-packages --user pynvim
+fancy_print "installing uv tools..."
+xargs uv pip tool < "${list_file_uv_tools}"
 
 fancy_print "installing vim-plug..."
 curl --create-dirs -fsSLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

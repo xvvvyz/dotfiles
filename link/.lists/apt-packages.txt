@@ -1,11 +1,16 @@
+containerd.io
 curl
 dialog
+docker-buildx-plugin
+docker-ce
+docker-ce-cli
+docker-compose-plugin
 eza
-fzf
 git
 gnupg
 neovim
 nodejs
+pinentry-tty
 python3-neovim
 python3-pip
 python3-pynvim
