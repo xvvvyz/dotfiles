@@ -1,16 +1,22 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
-if [[ "$OSTYPE" == darwin* ]]; then
-  programs=(pinentry-mac pinentry-curses)
-else
-  programs=(pinentry-curses pinentry-tty)
-fi
+candidates="
+/opt/homebrew/bin/pinentry-mac
+/usr/local/bin/pinentry-mac
+/usr/bin/pinentry-mac
+/usr/bin/pinentry-curses
+/bin/pinentry-curses
+/usr/bin/pinentry-tty
+/bin/pinentry-tty
+/usr/bin/pinentry
+/bin/pinentry
+"
 
-for prog in "${programs[@]}"; do
-  if command -v "$prog" >/dev/null 2>&1; then
-    exec "$prog" "$@"
+for p in $candidates; do
+  if [ -x "$p" ]; then
+    exec "$p" "$@"
   fi
 done
 
-echo "Error: No pinentry program found" >&2
+echo "Error: No pinentry program found." >&2
 exit 1
