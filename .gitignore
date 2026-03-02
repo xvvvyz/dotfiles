@@ -19,6 +19,7 @@ link/.config/systemd/
 link/.config/user-dirs.dirs
 link/.config/user-dirs.locale
 link/.config/yarn/
+link/.docker/
 
 link/.config/gh/*
 !link/.config/gh/config.yml
@@ -28,9 +29,6 @@ link/.config/nvim/*
 
 link/.config/zed/*
 !link/.config/zed/settings.json
-
-link/.docker/*
-!link/.docker/config.json
 
 link/.gnupg/*
 !link/.gnupg/gpg-agent.conf
