@@ -1,7 +1,10 @@
+ableton-live-suite
 cursor
 firefox
 imageoptim
 jellyfin-media-player
+melodics
+microsoft-excel
 protonvpn
 qbittorrent
 signal
