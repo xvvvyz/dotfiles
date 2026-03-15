@@ -90,6 +90,16 @@ ln -svfn "$lua_ls_dir/bin/lua-language-server" "$HOME/.local/bin/lua-language-se
 fancy_print "installing claude code..."
 curl -fsSL https://claude.ai/install.sh | bash
 
+if grep -qi microsoft /proc/version; then
+  fancy_print "installing win32yank..."
+  win32yank_url=$(curl -fsSL "https://api.github.com/repos/equalsraf/win32yank/releases/latest" | grep -Po '"browser_download_url": "\K[^"]*x64[^"]*')
+  curl -fsSL "$win32yank_url" -o /tmp/win32yank.zip
+  unzip -o /tmp/win32yank.zip -d /tmp/win32yank
+  chmod +x /tmp/win32yank/win32yank.exe
+  mv /tmp/win32yank/win32yank.exe "$HOME/.local/bin/win32yank.exe"
+  rm -rf /tmp/win32yank /tmp/win32yank.zip
+fi
+
 fancy_print "installing neovim plugins..."
 nvim --headless '+Lazy! sync' +qa
 

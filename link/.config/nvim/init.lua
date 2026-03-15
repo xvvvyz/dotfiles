@@ -11,6 +11,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = ' '
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
 
 require('lazy').setup({
   -- editing
@@ -80,7 +82,7 @@ require('lazy').setup({
       }),
     })
   end },
-})
+}, { rocks = { enabled = false } })
 
 -- lsp keymaps
 vim.api.nvim_create_autocmd('LspAttach', {
