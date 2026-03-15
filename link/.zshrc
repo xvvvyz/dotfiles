@@ -15,7 +15,7 @@ path=(
 )
 
 _fzf_compgen_path() {
-  ag --hidden --smart-case -g .
+  rg --files --hidden --glob '!.git'
 }
 
 eval "$(fzf --zsh)"
@@ -24,7 +24,7 @@ unset HISTFILESIZE
 
 export EDITOR="nvim"
 export FZF_COMPLETION_TRIGGER="**"
-export FZF_DEFAULT_COMMAND="ag --vimgrep --hidden --smart-case -g ."
+export FZF_DEFAULT_COMMAND="rg --files --hidden --glob '!.git'"
 export FZF_DEFAULT_OPTS="--exact --inline-info"
 export GREP_COLORS="mt=1;32"
 export HISTDUP=erase

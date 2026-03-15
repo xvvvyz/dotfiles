@@ -34,5 +34,5 @@ fi
 
 if command -v nvim; then
   fancy_print "updating neovim plugins..."
-  nvim -c 'PlugUpgrade' -c 'PlugUpdate' -c 'UpdateRemotePlugins' -c 'qa!'
+  nvim --headless '+Lazy! sync' +qa
 fi

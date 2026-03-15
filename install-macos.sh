@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+set -eo pipefail
+
 source "$(dirname "$0")/link/.bin/utilities/config"
 source "$(dirname "$0")/link/.bin/utilities/fancy-print"
 source "$(dirname "$0")/link/.bin/utilities/fancy-ask"
@@ -26,14 +28,15 @@ sudo pmset -a standbydelay 15
 killall Dock
 killall Finder
 
-if [[ -d ~/.config ]]; then
+if [[ -d ~/.config && ! -L ~/.config ]]; then
   fancy_print "merging .config files..."
-  cp -npr ~/.config/* link/.config
+  cp -npr ~/.config/* link/.config || true
   rm -rf ~/.config
 fi
 
 fancy_print "removing existing .gnupg/.ssh..."
-rm -rf ~/.gnupg ~/.ssh
+[[ -L ~/.gnupg ]] || rm -rf ~/.gnupg
+[[ -L ~/.ssh ]] || rm -rf ~/.ssh
 
 fancy_print "symlinking dotfiles..."
 ln -svfn "$(pwd)/link/."??* ~
@@ -43,7 +46,7 @@ mkdir -p /usr/local/bin
 sudo ln -svfn ~/.bin/pinentry /usr/local/bin/pinentry
 
 fancy_print "installing zgenom..."
-git clone https://github.com/jandamm/zgenom.git "$zgen_dir"
+git clone https://github.com/jandamm/zgenom.git "$zgen_dir" 2>/dev/null || true
 
 fancy_print "sourcing ~/.zshrc"
 source ~/.zshrc
@@ -52,25 +55,24 @@ fancy_print "installing homebrew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 fancy_print "installing brew packages..."
-xargs brew install < "${list_file_brew_packages}"
+xargs brew install < "${list_file_brew_packages}" || true
 
 fancy_print "installing brew casks..."
-xargs brew install --cask < "${list_file_brew_casks}"
+while read -r cask; do
+  brew list --cask "$cask" &>/dev/null || brew install --cask "$cask"
+done < "${list_file_brew_casks}"
 
 fancy_print "installing bun packages..."
-xargs bun i -g < "${list_file_bun_packages}"
+xargs bun i -g < "${list_file_bun_packages}" || true
 
 fancy_print "installing uv tools..."
-xargs uv pip tool < "${list_file_uv_tools}"
-
-fancy_print "installing vim-plug..."
-curl --create-dirs -fsSLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+xargs uv pip tool < "${list_file_uv_tools}" || true
 
 fancy_print "installing neovim plugins..."
-nvim -c 'PlugInstall' -c 'UpdateRemotePlugins' -c 'qa!'
+nvim --headless '+Lazy! sync' +qa
 
 fancy_print "updating dotfiles remote..."
-git remote remove origin
-git remote add --mirror=push origin git@github.com:xvvvyz/dotfiles.git
+git remote remove origin 2>/dev/null || true
+git remote add --mirror=push origin git@github.com:xvvvyz/dotfiles.git 2>/dev/null || true
 
 fancy_print "done!"

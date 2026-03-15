@@ -1,4 +1,5 @@
 ableton-live-suite
+claude-code
 cursor
 imageoptim
 melodics

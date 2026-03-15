@@ -24,5 +24,3 @@
   rebase = true
 [diff]
   compactionHeuristic = true
-[alias]
-  deploy = !~/.bin/git-deploy

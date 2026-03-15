@@ -8,11 +8,12 @@ fzf
 gh
 git
 gnupg
+lua-language-server
 mpv
 neovim
 node
 oven-sh/bun/bun
 pinentry-mac
-the_silver_searcher
+ripgrep
 tmux
 uv

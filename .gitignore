@@ -29,7 +29,7 @@ link/.config/gh/*
 !link/.config/gh/config.yml
 
 link/.config/nvim/*
-!link/.config/nvim/init.vim
+!link/.config/nvim/init.lua
 
 link/.config/zed/*
 !link/.config/zed/settings.json

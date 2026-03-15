@@ -8,14 +8,15 @@ source "$(dirname "$0")/link/.bin/utilities/fancy-ask"
 
 GLOBIGNORE=".:.."
 
-if [[ -d ~/.config ]]; then
+if [[ -d ~/.config && ! -L ~/.config ]]; then
   fancy_print "merging .config files..."
   cp -npr ~/.config/* link/.config || true
   rm -rf ~/.config
 fi
 
 fancy_print "removing existing .gnupg/.ssh..."
-rm -rf ~/.gnupg ~/.ssh
+[[ -L ~/.gnupg ]] || rm -rf ~/.gnupg
+[[ -L ~/.ssh ]] || rm -rf ~/.ssh
 
 fancy_print "symlinking dotfiles..."
 ln -svfn "$(pwd)/link/."??* ~
@@ -68,16 +69,20 @@ curl -fsSL https://bun.sh/install | bash
 chmod u+w ~/.zshrc
 
 fancy_print "installing bun packages..."
-xargs bun i -g < "${list_file_bun_packages}"
+xargs bun i -g < "${list_file_bun_packages}" || true
 
-fancy_print "installing vim-plug..."
-curl --create-dirs -fsSLo ~/.local/share/nvim/site/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fancy_print "installing lua-language-server..."
+lua_ls_version=$(curl -fsSL "https://api.github.com/repos/LuaLS/lua-language-server/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
+lua_ls_dir="$HOME/.local/lib/lua-language-server"
+mkdir -p "$lua_ls_dir"
+curl -fsSL "https://github.com/LuaLS/lua-language-server/releases/download/${lua_ls_version}/lua-language-server-${lua_ls_version}-linux-x64.tar.gz" | tar xz -C "$lua_ls_dir"
+ln -svfn "$lua_ls_dir/bin/lua-language-server" "$HOME/.local/bin/lua-language-server"
 
 fancy_print "installing neovim plugins..."
-nvim -c 'PlugInstall' -c 'UpdateRemotePlugins' -c 'qa!'
+nvim --headless '+Lazy! sync' +qa
 
 fancy_print "updating dotfiles remote..."
-git remote remove origin || true
-git remote add --mirror=push origin git@github.com:xvvvyz/dotfiles.git
+git remote remove origin 2>/dev/null || true
+git remote add --mirror=push origin git@github.com:xvvvyz/dotfiles.git 2>/dev/null || true
 
 fancy_print "done!"
