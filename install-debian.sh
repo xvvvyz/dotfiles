@@ -25,9 +25,6 @@ fancy_print "symlinking pinentry to /usr/local/bin..."
 mkdir -p /usr/local/bin
 sudo ln -svfn ~/.bin/pinentry /usr/local/bin/pinentry
 
-fancy_print "removing unused symlinks..."
-rm -f ~/.docker
-grep -qi microsoft /proc/version || rm -f ~/.gnupg
 
 fancy_print "installing fzf..."
 git clone --depth 1 https://github.com/junegunn/fzf.git "$fzf_dir" 2>/dev/null || true
