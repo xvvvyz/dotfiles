@@ -1,0 +1,43 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+source "${0:A:h}/utilities/fancy-print"
+
+if command -v brew &>/dev/null; then
+  fancy_print "cleaning brew..."
+  brew cleanup --prune=all
+  brew autoremove
+fi
+
+if command -v apt-get &>/dev/null; then
+  fancy_print "cleaning apt..."
+  sudo apt-get autoremove -y
+  sudo apt-get autoclean -y
+fi
+
+if command -v bun &>/dev/null; then
+  fancy_print "cleaning bun..."
+  bun -g pm cache rm
+fi
+
+if command -v uv &>/dev/null; then
+  fancy_print "cleaning uv..."
+  uv cache clean
+fi
+
+if command -v nvim &>/dev/null; then
+  fancy_print "cleaning neovim..."
+  nvim --headless '+Lazy! clean' +qa
+fi
+
+if command -v docker &>/dev/null; then
+  fancy_print "cleaning docker..."
+  docker container prune -f
+  docker image prune -a -f
+  docker volume prune -a -f
+  docker network prune -f
+  docker builder prune -a -f
+fi
+
+fancy_print "done!"
