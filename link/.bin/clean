@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+source "${0:A:h}/utilities/env"
 source "${0:A:h}/utilities/fancy-print"
 
 if command -v brew &>/dev/null; then
@@ -29,6 +30,19 @@ fi
 if command -v nvim &>/dev/null; then
   fancy_print "cleaning neovim..."
   nvim --headless '+Lazy! clean' +qa
+fi
+
+fancy_print "cleaning system caches..."
+
+if is_macos; then
+  rm -rf ~/Library/Caches/*
+  rm -rf ~/Library/Logs/*
+elif is_debian; then
+  rm -rf ~/.cache/*
+
+  if command -v journalctl &>/dev/null; then
+    sudo journalctl --vacuum-time=7d
+  fi
 fi
 
 if command -v docker &>/dev/null; then

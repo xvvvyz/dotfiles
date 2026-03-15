@@ -3,6 +3,7 @@
 set -e
 
 source "$(dirname "$0")/link/.bin/utilities/config"
+source "$(dirname "$0")/link/.bin/utilities/env"
 source "$(dirname "$0")/link/.bin/utilities/fancy-print"
 source "$(dirname "$0")/link/.bin/utilities/fancy-ask"
 
@@ -87,7 +88,7 @@ ln -svfn "$lua_ls_dir/bin/lua-language-server" "$HOME/.local/bin/lua-language-se
 fancy_print "installing claude code..."
 curl -fsSL https://claude.ai/install.sh | bash
 
-if grep -qi microsoft /proc/version; then
+if is_wsl; then
   fancy_print "installing win32yank..."
   win32yank_url=$(curl -fsSL "https://api.github.com/repos/equalsraf/win32yank/releases/latest" | grep -Po '"browser_download_url": "\K[^"]*x64[^"]*')
   curl -fsSL "$win32yank_url" -o /tmp/win32yank.zip

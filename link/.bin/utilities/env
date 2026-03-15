@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+is_macos() {
+  [ "$(uname -s)" = "Darwin" ]
+}
+
+is_debian() {
+  [ -f /etc/debian_version ]
+}
+
+is_wsl() {
+  grep -qi microsoft /proc/version 2>/dev/null
+}

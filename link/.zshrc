@@ -62,7 +62,9 @@ if ! zgenom saved; then
   zgenom save
 fi
 
-if [[ "$OSTYPE" == darwin* ]]; then
+source "$HOME/.bin/utilities/env"
+
+if is_macos; then
   path=(
     $HOME/Library/Android/sdk/emulator
     $HOME/Library/Android/sdk/platform-tools
@@ -86,7 +88,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
   eval "$(brew shellenv)"
 fi
 
-if grep -qi microsoft /proc/version &>/dev/null; then
+if is_wsl; then
   export GPG_TTY="$(tty)"
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
