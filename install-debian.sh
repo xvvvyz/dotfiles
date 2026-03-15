@@ -71,6 +71,14 @@ chmod u+w ~/.zshrc
 fancy_print "installing bun packages..."
 xargs bun i -g < "${list_file_bun_packages}" || true
 
+fancy_print "installing neovim..."
+nvim_version=$(curl -fsSL "https://api.github.com/repos/neovim/neovim/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
+nvim_dir="$HOME/.local/lib/neovim"
+rm -rf "$nvim_dir"
+mkdir -p "$nvim_dir"
+curl -fsSL "https://github.com/neovim/neovim/releases/download/${nvim_version}/nvim-linux-x86_64.tar.gz" | tar xz --strip-components=1 -C "$nvim_dir"
+ln -svfn "$nvim_dir/bin/nvim" "$HOME/.local/bin/nvim"
+
 fancy_print "installing lua-language-server..."
 lua_ls_version=$(curl -fsSL "https://api.github.com/repos/LuaLS/lua-language-server/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
 lua_ls_dir="$HOME/.local/lib/lua-language-server"

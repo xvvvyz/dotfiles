@@ -8,10 +8,8 @@ docker-compose-plugin
 eza
 git
 gnupg
-neovim
 nodejs
 pinentry-tty
-python3-neovim
 python3-pip
 python3-pynvim
 ripgrep
