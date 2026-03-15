@@ -2,8 +2,6 @@
   "permissions": {
     "defaultMode": "default"
   },
-  "skipDangerousModePermissionPrompt": true,
-  "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true
-  }
+  "enabledPlugins": {},
+  "skipDangerousModePermissionPrompt": true
 }
