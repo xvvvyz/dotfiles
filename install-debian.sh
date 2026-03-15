@@ -77,6 +77,7 @@ nvim_dir="$HOME/.local/lib/neovim"
 rm -rf "$nvim_dir"
 mkdir -p "$nvim_dir"
 curl -fsSL "https://github.com/neovim/neovim/releases/download/${nvim_version}/nvim-linux-x86_64.tar.gz" | tar xz --strip-components=1 -C "$nvim_dir"
+mkdir -p "$HOME/.local/bin"
 ln -svfn "$nvim_dir/bin/nvim" "$HOME/.local/bin/nvim"
 
 fancy_print "installing lua-language-server..."
@@ -85,6 +86,9 @@ lua_ls_dir="$HOME/.local/lib/lua-language-server"
 mkdir -p "$lua_ls_dir"
 curl -fsSL "https://github.com/LuaLS/lua-language-server/releases/download/${lua_ls_version}/lua-language-server-${lua_ls_version}-linux-x64.tar.gz" | tar xz -C "$lua_ls_dir"
 ln -svfn "$lua_ls_dir/bin/lua-language-server" "$HOME/.local/bin/lua-language-server"
+
+fancy_print "installing claude code..."
+curl -fsSL https://claude.ai/install.sh | bash
 
 fancy_print "installing neovim plugins..."
 nvim --headless '+Lazy! sync' +qa
