@@ -1,0 +1,11 @@
+GnuPG.GnuPG
+Melodics.Melodics
+Proton.ProtonVPN
+EpicGames.EpicGamesLauncher
+dorssel.usbipd-win
+Microsoft.Edge
+Valve.Steam
+Jellyfin.JellyfinMediaPlayer
+OpenWhisperSystems.Signal
+Microsoft.WindowsTerminal
+Microsoft.WSL

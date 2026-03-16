@@ -32,6 +32,11 @@ if command -v uv; then
   uv tool upgrade --all
 fi
 
+if command -v winget.exe; then
+  fancy_print "updating winget packages..."
+  winget.exe upgrade --all --accept-package-agreements --accept-source-agreements
+fi
+
 if command -v nvim; then
   fancy_print "updating neovim plugins..."
   nvim --headless '+Lazy! sync' +qa

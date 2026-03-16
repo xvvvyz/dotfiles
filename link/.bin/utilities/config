@@ -10,4 +10,5 @@ export list_file_brew_casks=${list_dir}/brew-casks.txt
 export list_file_brew_packages=${list_dir}/brew-packages.txt
 export list_file_bun_packages=${list_dir}/bun-packages.txt
 export list_file_uv_tools=${list_dir}/uv-tools.txt
+export list_file_winget_packages=${list_dir}/winget-packages.txt
 export zgen_dir=~/.zgenom

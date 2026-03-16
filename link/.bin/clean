@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+source "${0:A:h}/utilities/env"
 source "${0:A:h}/utilities/fancy-print"
 
 if command -v brew &>/dev/null; then
@@ -35,6 +36,15 @@ fi
 if command -v journalctl &>/dev/null; then
   fancy_print "cleaning journalctl caches..."
   sudo journalctl --vacuum-time=7d
+fi
+
+if is_wsl; then
+  fancy_print "cleaning windows temp files..."
+  cmd.exe /C "del /q /s %TEMP%\*" > /dev/null 2>&1 || true
+  cmd.exe /C "del /q /s C:\Windows\Temp\*" > /dev/null 2>&1 || true
+
+  fancy_print "emptying recycle bin..."
+  powershell.exe -Command "Clear-RecycleBin -Force -ErrorAction SilentlyContinue" > /dev/null 2>&1 || true
 fi
 
 if command -v docker &>/dev/null; then

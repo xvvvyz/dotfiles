@@ -28,3 +28,14 @@ if command -v uv; then
   fancy_print "saving uv tools list..."
   uv tool list | grep -v '^-' | awk '{print $1}' > "${list_file_uv_tools}"
 fi
+
+if command -v winget.exe; then
+  fancy_print "saving winget packages list..."
+  win_tmp=$(cmd.exe /C "echo %TEMP%" 2>/dev/null | tr -d '\r')
+  winget.exe export -o "${win_tmp}\\winget-packages.json" --accept-source-agreements > /dev/null 2>&1 || true
+  grep PackageIdentifier "$(wslpath "${win_tmp}")/winget-packages.json" \
+    | tr -d '\r' \
+    | sed 's/.*: "//;s/"//' \
+    | grep -Ev '^(Microsoft\.(VCRedist|VCLibs|DotNet|DirectX|UI\.Xaml|GameInput|AppInstaller|NET\.Native)|Nvidia\.PhysX|XP[A-Z0-9]+)' \
+    > "${list_file_winget_packages}"
+fi

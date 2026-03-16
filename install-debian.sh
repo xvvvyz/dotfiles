@@ -89,6 +89,11 @@ fancy_print "installing claude code..."
 curl -fsSL https://claude.ai/install.sh | bash
 
 if is_wsl; then
+  fancy_print "installing winget packages..."
+  while IFS= read -r pkg; do
+    winget.exe install -e --id "$pkg" --source winget --accept-package-agreements --accept-source-agreements < /dev/null || true
+  done < "${list_file_winget_packages}"
+
   fancy_print "installing win32yank..."
   win32yank_url=$(curl -fsSL "https://api.github.com/repos/equalsraf/win32yank/releases/latest" | grep -Po '"browser_download_url": "\K[^"]*x64[^"]*')
   curl -fsSL "$win32yank_url" -o /tmp/win32yank.zip
