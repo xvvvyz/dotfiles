@@ -122,6 +122,7 @@ vim.opt.laststatus = 0
 vim.opt.linebreak = true
 vim.opt.listchars = { space = ' ', tab = '→ ', eol = '¬' }
 vim.opt.mouse = 'nv'
+vim.opt.clipboard = 'unnamedplus'
 vim.opt.scrolloff = 5
 vim.opt.shiftwidth = 2
 vim.opt.sidescroll = 1
