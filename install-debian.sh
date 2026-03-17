@@ -94,6 +94,15 @@ if is_wsl; then
     winget.exe install -e --id "$pkg" --source winget --accept-package-agreements --accept-source-agreements < /dev/null || true
   done < "${list_file_winget_packages}"
 
+  fancy_print "restoring powertoys keyboard manager settings..."
+  pt_kbm_src="${copy_dir}/AppData/Local/Microsoft/PowerToys/Keyboard Manager"
+  pt_kbm_dst="${win_appdata_local}/Microsoft/PowerToys/Keyboard Manager"
+
+  if [[ -d "$pt_kbm_src" ]]; then
+    mkdir -p "$pt_kbm_dst"
+    cp "$pt_kbm_src"/{default,settings}.json "$pt_kbm_dst"/
+  fi
+
   fancy_print "installing win32yank..."
   win32yank_url=$(curl -fsSL "https://api.github.com/repos/equalsraf/win32yank/releases/latest" | grep -Po '"browser_download_url": "\K[^"]*x64[^"]*')
   curl -fsSL "$win32yank_url" -o /tmp/win32yank.zip
