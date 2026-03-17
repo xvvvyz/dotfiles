@@ -10,7 +10,11 @@
 5. `fetch`
 6. `quit`
 
-## Debian (headless)
+## Windows
+
+0. `wsl --install -d Debian`
+
+## Debian
 
 0. `git clone https://github.com/xvvvyz/dotfiles ~/.dotfiles`
 1. `cd ~/.dotfiles`
