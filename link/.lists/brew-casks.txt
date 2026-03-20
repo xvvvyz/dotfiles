@@ -2,6 +2,7 @@ ableton-live-suite
 claude-code
 cursor
 imageoptim
+linearmouse
 melodics
 protonvpn
 signal

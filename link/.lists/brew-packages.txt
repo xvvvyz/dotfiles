@@ -17,3 +17,4 @@ pinentry-mac
 ripgrep
 tmux
 uv
+wget
