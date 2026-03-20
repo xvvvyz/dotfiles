@@ -3,5 +3,6 @@
     "defaultMode": "default"
   },
   "enabledPlugins": {},
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "high"
 }
