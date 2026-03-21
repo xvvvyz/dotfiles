@@ -1,6 +1,7 @@
 GnuPG.GnuPG
 Melodics.Melodics
 Proton.ProtonVPN
+WireGuard.WireGuard
 EpicGames.EpicGamesLauncher
 dorssel.usbipd-win
 Microsoft.Edge
