@@ -1,0 +1,8 @@
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+
+[projects."/home/cade/x"]
+trust_level = "trusted"
+
+[projects."/home/cade/.dotfiles"]
+trust_level = "trusted"
