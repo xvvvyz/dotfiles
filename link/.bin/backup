@@ -15,13 +15,18 @@ fi
 
 if command -v bun >/dev/null 2>&1; then
   fancy_print "saving bun packages list..."
-  bun_global_package_file="${BUN_INSTALL:-${HOME}/.bun}/install/global/package.json"
+  bun_global_dir="${HOME}/.bun/install/global"
 
-  if [[ -f "${bun_global_package_file}" ]]; then
-    bun --eval 'const pkg = JSON.parse(await Bun.file(process.argv[1]).text()); for (const name of Object.keys(pkg.dependencies ?? {}).sort()) { console.log(name); }' "${bun_global_package_file}" > "${list_file_bun_packages}"
-  else
-    : > "${list_file_bun_packages}"
-  fi
+  bun --silent --eval '
+    const pkg = JSON.parse(await Bun.file(process.argv[1]).text());
+
+    const names = [
+      ...Object.keys(pkg.dependencies ?? {}),
+      ...Object.keys(pkg.optionalDependencies ?? {}),
+    ];
+
+    console.log([...new Set(names)].sort().join("\n"));
+  ' "${bun_global_dir}/package.json" > "${list_file_bun_packages}"
 fi
 
 if command -v uv; then
