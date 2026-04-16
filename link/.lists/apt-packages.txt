@@ -9,6 +9,7 @@ eza
 fuse3
 git
 gnupg
+make
 nodejs
 pinentry-tty
 python3-pip
