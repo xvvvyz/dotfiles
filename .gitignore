@@ -1,3 +1,4 @@
+link/.codex/
 link/.config/.wrangler/
 link/.config/JetBrains/
 link/.config/autostart/
@@ -25,8 +26,6 @@ link/.claude/*
 !link/.claude/CLAUDE.md
 !link/.claude/settings.json
 
-link/.codex/*
-!link/.codex/config.toml
 
 link/.config/gh/*
 !link/.config/gh/config.yml
