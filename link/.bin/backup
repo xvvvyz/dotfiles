@@ -13,16 +13,15 @@ if command -v brew; then
   brew list --cask > "${list_file_brew_casks}" 2>/dev/null || true
 fi
 
-if command -v bun; then
+if command -v bun >/dev/null 2>&1; then
   fancy_print "saving bun packages list..."
+  bun_global_package_file="${BUN_INSTALL:-${HOME}/.bun}/install/global/package.json"
 
-  bun pm ls -g \
-    | sed '1d' \
-    | sed -r 's/\x1b\[[0-9;]*m//g' \
-    | awk '{print substr($0, 11)}' \
-    | awk -F'@' '{print $1}' \
-    | sed '/^$/d' \
-    > "${list_file_bun_packages}"
+  if [[ -f "${bun_global_package_file}" ]]; then
+    bun --eval 'const pkg = JSON.parse(await Bun.file(process.argv[1]).text()); for (const name of Object.keys(pkg.dependencies ?? {}).sort()) { console.log(name); }' "${bun_global_package_file}" > "${list_file_bun_packages}"
+  else
+    : > "${list_file_bun_packages}"
+  fi
 fi
 
 if command -v uv; then

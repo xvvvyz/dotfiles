@@ -1,6 +1,6 @@
 ableton-live-suite
-claude-code
 cursor
+docker-desktop
 imageoptim
 jellyfin-media-player
 linearmouse

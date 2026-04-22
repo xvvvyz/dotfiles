@@ -85,9 +85,6 @@ mkdir -p "$lua_ls_dir"
 curl -fsSL "https://github.com/LuaLS/lua-language-server/releases/download/${lua_ls_version}/lua-language-server-${lua_ls_version}-linux-x64.tar.gz" | tar xz -C "$lua_ls_dir"
 ln -svfn "$lua_ls_dir/bin/lua-language-server" "$HOME/.local/bin/lua-language-server"
 
-fancy_print "installing claude code..."
-curl -fsSL https://claude.ai/install.sh | bash
-
 if is_wsl; then
   fancy_print "installing winget packages..."
   while IFS= read -r pkg; do

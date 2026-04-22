@@ -1,5 +1,5 @@
 cloudflared
-colima
+cocoapods
 dialog
 docker
 docker-buildx
@@ -8,6 +8,7 @@ fzf
 gh
 git
 gnupg
+imagemagick
 lua-language-server
 mpv
 neovim
