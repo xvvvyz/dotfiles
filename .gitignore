@@ -1,3 +1,4 @@
+link/.claude/
 link/.codex/
 link/.config/.wrangler/
 link/.config/JetBrains/
@@ -21,11 +22,6 @@ link/.config/user-dirs.dirs
 link/.config/user-dirs.locale
 link/.config/yarn/
 link/.docker/
-
-link/.claude/*
-!link/.claude/CLAUDE.md
-!link/.claude/settings.json
-
 
 link/.config/gh/*
 !link/.config/gh/config.yml
