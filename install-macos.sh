@@ -65,6 +65,9 @@ done < "${list_file_brew_casks}"
 fancy_print "installing bun packages..."
 xargs bun i -g < "${list_file_bun_packages}" || true
 
+fancy_print "installing cursor cli..."
+curl https://cursor.com/install -fsS | bash
+
 fancy_print "installing uv tools..."
 xargs uv pip tool < "${list_file_uv_tools}" || true
 

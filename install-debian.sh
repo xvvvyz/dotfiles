@@ -69,6 +69,9 @@ chmod u+w ~/.zshrc
 fancy_print "installing bun packages..."
 xargs bun i -g < "${list_file_bun_packages}" || true
 
+fancy_print "installing cursor cli..."
+curl https://cursor.com/install -fsS | bash
+
 fancy_print "installing neovim..."
 nvim_version=$(curl -fsSL "https://api.github.com/repos/neovim/neovim/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
 nvim_dir="$HOME/.local/lib/neovim"
