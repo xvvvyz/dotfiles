@@ -48,12 +48,16 @@ if is_wsl; then
 fi
 
 if command -v docker &>/dev/null; then
-  fancy_print "cleaning docker..."
-  docker container prune -f
-  docker image prune -a -f
-  docker volume prune -a -f
-  docker network prune -f
-  docker builder prune -a -f
+  if docker info &>/dev/null; then
+    fancy_print "cleaning docker..."
+    docker container prune -f
+    docker image prune -a -f
+    docker volume prune -a -f
+    docker network prune -f
+    docker builder prune -a -f
+  else
+    fancy_print "skipping docker..."
+  fi
 fi
 
 fancy_print "done!"
