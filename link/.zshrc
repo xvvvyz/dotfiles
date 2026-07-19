@@ -89,8 +89,20 @@ if is_macos; then
 fi
 
 if is_wsl; then
-  export GPG_TTY="$(tty)"
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
-  gpg-connect-agent updatestartuptty /bye &>/dev/null
+  if command -v usbipd.exe &>/dev/null; then
+    yubikey_busid=$(usbipd.exe list 2>/dev/null | awk 'tolower($2) ~ /^1050:/ { gsub(/\r/, "", $1); print $1; exit }')
+
+    if [[ -n "$yubikey_busid" ]]; then
+      usbipd.exe attach --wsl --busid "$yubikey_busid" &>/dev/null || true
+    fi
+
+    unset yubikey_busid
+  fi
+
+  if [[ -t 0 && -t 1 ]]; then
+    export GPG_TTY="$(tty)"
+    gpg-connect-agent updatestartuptty /bye &>/dev/null
+  fi
 fi
