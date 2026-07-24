@@ -42,7 +42,7 @@ fancy_print "symlinking dotfiles..."
 ln -svfn "$(pwd)/link/."??* ~
 
 fancy_print "symlinking pinentry to /usr/local/bin..."
-mkdir -p /usr/local/bin
+sudo mkdir -p /usr/local/bin
 sudo ln -svfn ~/.bin/pinentry /usr/local/bin/pinentry
 
 fancy_print "installing zgenom..."
@@ -69,7 +69,7 @@ fancy_print "installing cursor cli..."
 curl https://cursor.com/install -fsS | bash
 
 fancy_print "installing uv tools..."
-xargs uv pip tool < "${list_file_uv_tools}" || true
+xargs -n 1 uv tool install --upgrade < "${list_file_uv_tools}"
 
 fancy_print "installing neovim plugins..."
 nvim --headless '+Lazy! sync' +qa

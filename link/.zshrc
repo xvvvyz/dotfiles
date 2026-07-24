@@ -79,18 +79,14 @@ if is_macos; then
   )
 
   export ANDROID_HOME="$HOME/Library/Android/sdk"
-  export GPG_TTY="$(tty)"
   export HOMEBREW_NO_ENV_HINTS=1
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home"
   export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
   eval "$(brew shellenv)"
 fi
 
 if is_wsl; then
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-
   if command -v usbipd.exe &>/dev/null; then
     yubikey_busid=$(usbipd.exe list 2>/dev/null | awk 'tolower($2) ~ /^1050:/ { gsub(/\r/, "", $1); print $1; exit }')
 
@@ -100,9 +96,14 @@ if is_wsl; then
 
     unset yubikey_busid
   fi
+fi
+
+if (is_macos || is_wsl) && command -v gpgconf &>/dev/null; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
   if [[ -t 0 && -t 1 ]]; then
     export GPG_TTY="$(tty)"
-    gpg-connect-agent updatestartuptty /bye &>/dev/null
+    command -v gpg-connect-agent &>/dev/null &&
+      gpg-connect-agent updatestartuptty /bye &>/dev/null
   fi
 fi
