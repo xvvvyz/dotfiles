@@ -42,7 +42,12 @@ require('lazy').setup({
   end },
 
   -- formatting
-  { 'prettier/vim-prettier', build = 'npm i' },
+  { 'prettier/vim-prettier',
+    build = 'npm i',
+    init = function()
+      vim.g['prettier#exec_cmd_path'] = vim.fn.exepath('prettier')
+    end,
+  },
 
   -- languages
   'sheerun/vim-polyglot',
