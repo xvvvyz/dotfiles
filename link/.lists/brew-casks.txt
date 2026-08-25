@@ -1,10 +1,7 @@
 ableton-live-suite
-cursor
-docker-desktop
+firefox
 imageoptim
 jellyfin-media-player
 linearmouse
-melodics
 protonvpn
 signal
-spotify
