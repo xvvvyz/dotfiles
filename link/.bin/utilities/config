@@ -15,5 +15,12 @@ export zgen_dir=~/.zgenom
 export copy_dir=~/.dotfiles/copy
 
 if grep -qi microsoft /proc/version 2>/dev/null; then
-  export win_appdata_local="/mnt/c/Users/$(cmd.exe /C 'echo %USERNAME%' 2>/dev/null | tr -d '\r')/AppData/Local"
+  # cmd.exe inherits the linux environment, so %USERNAME% is the wsl user, not
+  # the windows one. %LOCALAPPDATA% is expanded by windows itself and is the
+  # only reliable source. cd out of the wsl filesystem to avoid the UNC warning.
+  win_local_appdata=$(cd /mnt/c && cmd.exe /C 'echo %LOCALAPPDATA%' 2>/dev/null | tr -d '\r' || true)
+
+  if [[ -n "$win_local_appdata" ]]; then
+    export win_appdata_local=$(wslpath -u "$win_local_appdata")
+  fi
 fi

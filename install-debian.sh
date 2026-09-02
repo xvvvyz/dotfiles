@@ -98,7 +98,7 @@ if is_wsl; then
   pt_kbm_src="${copy_dir}/AppData/Local/Microsoft/PowerToys/Keyboard Manager"
   pt_kbm_dst="${win_appdata_local}/Microsoft/PowerToys/Keyboard Manager"
 
-  if [[ -d "$pt_kbm_src" ]]; then
+  if [[ -n "$win_appdata_local" && -d "$pt_kbm_src" ]]; then
     mkdir -p "$pt_kbm_dst"
     cp "$pt_kbm_src"/{default,settings}.json "$pt_kbm_dst"/
   fi
