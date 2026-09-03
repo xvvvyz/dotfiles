@@ -34,8 +34,6 @@ git clone --depth 1 https://github.com/junegunn/fzf.git "$fzf_dir" 2>/dev/null |
 fancy_print "installing zgenom..."
 git clone https://github.com/jandamm/zgenom.git "$zgen_dir" 2>/dev/null || true
 
-fancy_print "installing curl..."
-
 fancy_print "adding docker sources..."
 sudo rm -f /etc/apt/sources.list.d/docker*.list /etc/apt/sources.list.d/docker*.sources
 sudo rm -f /etc/apt/keyrings/docker.gpg /etc/apt/keyrings/docker.asc
@@ -69,9 +67,6 @@ chmod u+w ~/.zshrc
 fancy_print "installing bun packages..."
 xargs bun i -g < "${list_file_bun_packages}" || true
 
-fancy_print "installing cursor cli..."
-curl https://cursor.com/install -fsS | bash
-
 fancy_print "installing neovim..."
 nvim_version=$(curl -fsSL "https://api.github.com/repos/neovim/neovim/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
 nvim_dir="$HOME/.local/lib/neovim"
@@ -89,18 +84,49 @@ curl -fsSL "https://github.com/LuaLS/lua-language-server/releases/download/${lua
 ln -svfn "$lua_ls_dir/bin/lua-language-server" "$HOME/.local/bin/lua-language-server"
 
 if is_wsl; then
+  winget_install() {
+    # winget reads stdin if it is a terminal, so cut it off to keep the loop
+    # below from losing lines to it.
+    winget.exe install -e --id "$1" --source "${2:-winget}" --accept-package-agreements --accept-source-agreements < /dev/null || true
+  }
+
   fancy_print "installing winget packages..."
-  while IFS= read -r pkg; do
-    winget.exe install -e --id "$pkg" --source winget --accept-package-agreements --accept-source-agreements < /dev/null || true
+  while IFS= read -r pkg || [[ -n "$pkg" ]]; do
+    [[ -n "$pkg" ]] && winget_install "$pkg"
   done < "${list_file_winget_packages}"
 
-  fancy_print "restoring powertoys keyboard manager settings..."
-  pt_kbm_src="${copy_dir}/AppData/Local/Microsoft/PowerToys/Keyboard Manager"
-  pt_kbm_dst="${win_appdata_local}/Microsoft/PowerToys/Keyboard Manager"
+  if has_nvidia_gpu; then
+    # the nvidia app hosts the g-sync and 3d settings the control panel used to
+    # own. it is published to the microsoft store only, not the winget source.
+    fancy_print "installing nvidia app..."
+    winget_install XP8CLZL93F5Z4P msstore
+  fi
 
-  if [[ -n "$win_appdata_local" && -d "$pt_kbm_src" ]]; then
-    mkdir -p "$pt_kbm_dst"
-    cp "$pt_kbm_src"/{default,settings}.json "$pt_kbm_dst"/
+  if is_windows11; then
+    # mirrors the windows ui prefs already set on this machine. deliberately
+    # omits -DisableMouseAcceleration: pointer precision is on here on purpose.
+    # bare -RemoveApps removes win11debloat's default selection of safe apps.
+    debloat_args="-Silent -CreateRestorePoint"
+    debloat_args="$debloat_args -ShowKnownFileExt -TaskbarAlignLeft -HideTaskview -HideChat"
+    debloat_args="$debloat_args -HideSearchTb -EnableDarkMode -DisableCopilot"
+    debloat_args="$debloat_args -DisableStartRecommended -DisableDVR -RemoveApps"
+
+    # win11debloat needs admin and wsl's powershell.exe is not elevated, so this
+    # raises a single UAC prompt.
+    fancy_print "running win11debloat..."
+    powershell.exe -NoProfile -Command "Start-Process powershell -Verb RunAs -Wait -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command \"& ([scriptblock]::Create((irm https://debloat.raphi.re/))) ${debloat_args}\"'" || true
+  fi
+
+  if [[ -n "$win_appdata_local" ]]; then
+    # every file under copy/AppData/Local maps to the same path under the
+    # windows %LOCALAPPDATA%. `backup` walks the same tree in reverse. close
+    # the apps first or they will write their in-memory state back over these.
+    fancy_print "restoring windows app settings..."
+    while IFS= read -r src; do
+      dst="${win_appdata_local}/${src#"${copy_dir}/AppData/Local/"}"
+      mkdir -p "$(dirname "$dst")"
+      cp "$src" "$dst"
+    done < <(find "${copy_dir}/AppData/Local" -type f)
   fi
 
   fancy_print "installing win32yank..."

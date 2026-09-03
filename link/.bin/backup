@@ -45,12 +45,14 @@ if command -v winget.exe; then
     | grep -Ev '^(Microsoft\.(VCRedist|VCLibs|DotNet|DirectX|UI\.Xaml|GameInput|AppInstaller|NET\.Native)|Nvidia\.PhysX|XP[A-Z0-9]+)' \
     > "${list_file_winget_packages}"
 
-  fancy_print "backing up powertoys keyboard manager settings..."
-  pt_kbm_src="${win_appdata_local}/Microsoft/PowerToys/Keyboard Manager"
-  pt_kbm_dst="${copy_dir}/AppData/Local/Microsoft/PowerToys/Keyboard Manager"
-
-  if [[ -n "$win_appdata_local" && -d "$pt_kbm_src" ]]; then
-    mkdir -p "$pt_kbm_dst"
-    cp "$pt_kbm_src"/{default,settings}.json "$pt_kbm_dst"/
+  if [[ -n "$win_appdata_local" ]]; then
+    # every file under copy/AppData/Local is refreshed from the same path under
+    # the windows %LOCALAPPDATA%. install-debian.sh walks the tree in reverse,
+    # so adding a file here is enough to have it backed up and restored.
+    fancy_print "backing up windows app settings..."
+    while IFS= read -r dst; do
+      src="${win_appdata_local}/${dst#"${copy_dir}/AppData/Local/"}"
+      [[ -f "$src" ]] && cp "$src" "$dst"
+    done < <(find "${copy_dir}/AppData/Local" -type f)
   fi
 fi
