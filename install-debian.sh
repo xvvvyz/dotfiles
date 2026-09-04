@@ -64,8 +64,10 @@ chmod a-w ~/.zshrc
 curl -fsSL https://bun.sh/install | bash
 chmod u+w ~/.zshrc
 
+export PATH="$HOME/.bun/bin:$HOME/.local/bin:$PATH"
+
 fancy_print "installing bun packages..."
-xargs bun i -g < "${list_file_bun_packages}" || true
+xargs bun i -g < "${list_file_bun_packages}"
 
 fancy_print "installing neovim..."
 nvim_version=$(curl -fsSL "https://api.github.com/repos/neovim/neovim/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
@@ -85,8 +87,7 @@ ln -svfn "$lua_ls_dir/bin/lua-language-server" "$HOME/.local/bin/lua-language-se
 
 if is_wsl; then
   winget_install() {
-    # winget reads stdin if it is a terminal, so cut it off to keep the loop
-    # below from losing lines to it.
+    # winget eats stdin, which would consume the caller's loop input.
     winget.exe install -e --id "$1" --source "${2:-winget}" --accept-package-agreements --accept-source-agreements < /dev/null || true
   }
 
@@ -96,31 +97,26 @@ if is_wsl; then
   done < "${list_file_winget_packages}"
 
   if has_nvidia_gpu; then
-    # the nvidia app hosts the g-sync and 3d settings the control panel used to
-    # own. it is published to the microsoft store only, not the winget source.
+    # published to the microsoft store only, not the winget source.
     fancy_print "installing nvidia app..."
     winget_install XP8CLZL93F5Z4P msstore
   fi
 
   if is_windows11; then
-    # mirrors the windows ui prefs already set on this machine. deliberately
-    # omits -DisableMouseAcceleration: pointer precision is on here on purpose.
-    # bare -RemoveApps removes win11debloat's default selection of safe apps.
+    # -DisableMouseAcceleration is deliberately omitted; pointer precision is
+    # on here on purpose.
     debloat_args="-Silent -CreateRestorePoint"
     debloat_args="$debloat_args -ShowKnownFileExt -TaskbarAlignLeft -HideTaskview -HideChat"
     debloat_args="$debloat_args -HideSearchTb -EnableDarkMode -DisableCopilot"
     debloat_args="$debloat_args -DisableStartRecommended -DisableDVR -RemoveApps"
 
-    # win11debloat needs admin and wsl's powershell.exe is not elevated, so this
-    # raises a single UAC prompt.
     fancy_print "running win11debloat..."
     powershell.exe -NoProfile -Command "Start-Process powershell -Verb RunAs -Wait -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command \"& ([scriptblock]::Create((irm https://debloat.raphi.re/))) ${debloat_args}\"'" || true
   fi
 
   if [[ -n "$win_appdata_local" ]]; then
-    # every file under copy/AppData/Local maps to the same path under the
-    # windows %LOCALAPPDATA%. `backup` walks the same tree in reverse. close
-    # the apps first or they will write their in-memory state back over these.
+    # close the apps first or they will write their in-memory state back over
+    # these.
     fancy_print "restoring windows app settings..."
     while IFS= read -r src; do
       dst="${win_appdata_local}/${src#"${copy_dir}/AppData/Local/"}"

@@ -46,9 +46,8 @@ if command -v winget.exe; then
     > "${list_file_winget_packages}"
 
   if [[ -n "$win_appdata_local" ]]; then
-    # every file under copy/AppData/Local is refreshed from the same path under
-    # the windows %LOCALAPPDATA%. install-debian.sh walks the tree in reverse,
-    # so adding a file here is enough to have it backed up and restored.
+    # adding a file under copy/AppData/Local is enough to have it backed up
+    # here and restored by install-debian.sh.
     fancy_print "backing up windows app settings..."
     while IFS= read -r dst; do
       src="${win_appdata_local}/${dst#"${copy_dir}/AppData/Local/"}"

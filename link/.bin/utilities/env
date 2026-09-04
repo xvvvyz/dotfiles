@@ -16,8 +16,7 @@ has_nvidia_gpu() {
   is_wsl || return 1
 
   # match the pci vendor id rather than the adapter name so this still works
-  # before the nvidia driver is installed. cd out of the wsl filesystem to
-  # avoid the UNC warning.
+  # before the nvidia driver is installed.
   (cd /mnt/c && powershell.exe -NoProfile -NonInteractive -Command 'if (Get-CimInstance Win32_VideoController | Where-Object { $_.PNPDeviceID -like "PCI\VEN_10DE*" }) { exit 0 } exit 1') >/dev/null 2>&1
 }
 
