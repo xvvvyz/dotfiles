@@ -5,3 +5,4 @@ jellyfin-media-player
 linearmouse
 protonvpn
 signal
+tailscale-app

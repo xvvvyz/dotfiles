@@ -2,7 +2,7 @@ GnuPG.GnuPG
 Proton.ProtonVPN
 Microsoft.PowerToys
 EpicGames.EpicGamesLauncher
-WireGuard.WireGuard
+Tailscale.Tailscale
 dorssel.usbipd-win
 Microsoft.Edge
 Valve.Steam
