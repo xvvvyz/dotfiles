@@ -16,6 +16,7 @@
 
 ## Debian
 
-0. `git clone https://github.com/xvvvyz/dotfiles ~/.dotfiles`
-1. `cd ~/.dotfiles`
-2. `./install-debian.sh`
+0. `sudo apt update && sudo apt install -y git`
+1. `git clone https://github.com/xvvvyz/dotfiles ~/.dotfiles`
+2. `cd ~/.dotfiles`
+3. `./install-debian.sh`

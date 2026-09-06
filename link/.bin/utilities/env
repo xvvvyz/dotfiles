@@ -19,10 +19,3 @@ has_nvidia_gpu() {
   # before the nvidia driver is installed.
   (cd /mnt/c && powershell.exe -NoProfile -NonInteractive -Command 'if (Get-CimInstance Win32_VideoController | Where-Object { $_.PNPDeviceID -like "PCI\VEN_10DE*" }) { exit 0 } exit 1') >/dev/null 2>&1
 }
-
-is_windows11() {
-  is_wsl || return 1
-
-  # windows 11 is build 22000 and up; windows 10 tops out at 19045.
-  (cd /mnt/c && powershell.exe -NoProfile -NonInteractive -Command 'if ([int](Get-CimInstance Win32_OperatingSystem).BuildNumber -ge 22000) { exit 0 } exit 1') >/dev/null 2>&1
-}

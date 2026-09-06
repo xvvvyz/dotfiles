@@ -9,6 +9,10 @@ source "$(dirname "$0")/link/.bin/utilities/fancy-ask"
 
 GLOBIGNORE=".:.."
 
+fancy_print "installing bootstrap packages..."
+sudo apt update
+sudo apt install -y ca-certificates curl git unzip
+
 if [[ -d ~/.config && ! -L ~/.config ]]; then
   fancy_print "merging .config files..."
   cp -npr ~/.config/* link/.config || true
@@ -37,8 +41,6 @@ git clone https://github.com/jandamm/zgenom.git "$zgen_dir" 2>/dev/null || true
 fancy_print "adding docker sources..."
 sudo rm -f /etc/apt/sources.list.d/docker*.list /etc/apt/sources.list.d/docker*.sources
 sudo rm -f /etc/apt/keyrings/docker.gpg /etc/apt/keyrings/docker.asc
-sudo apt update
-sudo apt install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -55,6 +57,16 @@ sudo apt update
 
 fancy_print "installing apt packages..."
 xargs -a "${list_file_apt_packages}" sudo apt-get install -y
+
+if is_wsl; then
+  # no logind seat in wsl, so the uaccess tag from 60-scdaemon.rules never applies.
+  fancy_print "adding yubikey udev rule..."
+  sudo tee /etc/udev/rules.d/70-yubikey.rules <<EOF
+SUBSYSTEM=="usb", ATTR{idVendor}=="1050", GROUP="plugdev", MODE="0660"
+EOF
+  sudo udevadm control --reload
+  sudo udevadm trigger --subsystem-match=usb --action=add
+fi
 
 fancy_print "setting zsh as default shell..."
 chsh -s "$(command -v zsh)" "$USER"
@@ -102,27 +114,22 @@ if is_wsl; then
     winget_install XP8CLZL93F5Z4P msstore
   fi
 
-  if is_windows11; then
-    # -DisableMouseAcceleration is deliberately omitted; pointer precision is
-    # on here on purpose.
-    debloat_args="-Silent -CreateRestorePoint"
-    debloat_args="$debloat_args -ShowKnownFileExt -TaskbarAlignLeft -HideTaskview -HideChat"
-    debloat_args="$debloat_args -HideSearchTb -EnableDarkMode -DisableCopilot"
-    debloat_args="$debloat_args -DisableStartRecommended -DisableDVR -RemoveApps"
-
-    fancy_print "running win11debloat..."
-    powershell.exe -NoProfile -Command "Start-Process powershell -Verb RunAs -Wait -ArgumentList '-NoProfile -ExecutionPolicy Bypass -Command \"& ([scriptblock]::Create((irm https://debloat.raphi.re/))) ${debloat_args}\"'" || true
-  fi
-
   if [[ -n "$win_appdata_local" ]]; then
-    # close the apps first or they will write their in-memory state back over
-    # these.
-    fancy_print "restoring windows app settings..."
-    while IFS= read -r src; do
-      dst="${win_appdata_local}/${src#"${copy_dir}/AppData/Local/"}"
-      mkdir -p "$(dirname "$dst")"
-      cp "$src" "$dst"
-    done < <(find "${copy_dir}/AppData/Local" -type f)
+    fancy_print "staging windows setup..."
+    win_stage="${win_appdata_local}/Temp/dotfiles"
+    rm -rf "$win_stage"
+    mkdir -p "$win_stage"
+    cp install-windows.ps1 "${list_file_windows_apps}" "$win_stage"
+    cp -r "${copy_dir}/AppData" "$win_stage"
+
+    fancy_print "running windows setup..."
+    # -Wait would also wait on descendants, including the powertoys it starts.
+    powershell.exe -NoProfile -Command "(Start-Process powershell -Verb RunAs -PassThru -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File \"$(wslpath -w "$win_stage/install-windows.ps1")\"').WaitForExit()" || true
+
+    # windows 11 blocks setting the default browser silently; this opens the
+    # settings page for the remaining click. unelevated on purpose.
+    fancy_print "opening default browser settings..."
+    (cd /mnt/c && cmd.exe /C start "" "C:\Program Files\Mozilla Firefox\firefox.exe" -setDefaultBrowser) || true
   fi
 
   fancy_print "installing win32yank..."

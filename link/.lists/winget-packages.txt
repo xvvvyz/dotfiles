@@ -4,7 +4,7 @@ Microsoft.PowerToys
 EpicGames.EpicGamesLauncher
 Tailscale.Tailscale
 dorssel.usbipd-win
-Microsoft.Edge
+Mozilla.Firefox
 Valve.Steam
 EpicGames.EpicOnlineServices
 Jellyfin.JellyfinMediaPlayer

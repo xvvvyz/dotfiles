@@ -15,6 +15,7 @@ pinentry-tty
 python3-pip
 python3-pynvim
 ripgrep
+scdaemon
 tmux
 unzip
 zsh

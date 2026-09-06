@@ -1,0 +1,42 @@
+# removed by win11debloat via -Apps, which replaces its default list rather
+# than adding to it. ids must match its Config/Apps.json. copilot, edge, xbox
+# and widgets are handled by dedicated flags in install-windows.ps1.
+Clipchamp.Clipchamp
+LinkedInforWindows
+MSTeams
+Microsoft.549981C3F5F10
+Microsoft.BingNews
+Microsoft.BingSearch
+Microsoft.BingWeather
+Microsoft.Getstarted
+Microsoft.M365Companions
+Microsoft.MSPaint
+Microsoft.MicrosoftJournal
+Microsoft.MicrosoftOfficeHub
+Microsoft.MicrosoftSolitaireCollection
+Microsoft.MicrosoftStickyNotes
+Microsoft.News
+Microsoft.Office.OneNote
+Microsoft.OneDrive
+Microsoft.OutlookForWindows
+Microsoft.PCManager
+Microsoft.Paint
+Microsoft.People
+Microsoft.PowerAutomateDesktop
+Microsoft.StartExperiencesApp
+Microsoft.Todos
+Microsoft.Windows.AIHub
+Microsoft.Windows.DevHome
+Microsoft.Windows.Photos
+Microsoft.WindowsAlarms
+Microsoft.WindowsCamera
+Microsoft.WindowsFeedbackHub
+Microsoft.WindowsMaps
+Microsoft.WindowsSoundRecorder
+Microsoft.YourPhone
+Microsoft.ZuneMusic
+Microsoft.ZuneVideo
+Microsoft.windowscommunicationsapps
+MicrosoftCorporationII.MicrosoftFamily
+MicrosoftCorporationII.QuickAssist
+MicrosoftWindows.CrossDevice
