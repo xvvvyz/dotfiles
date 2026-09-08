@@ -39,11 +39,23 @@ if command -v winget.exe; then
   win_tmp=$(cmd.exe /C "echo %TEMP%" 2>/dev/null | tr -d '\r')
   winget.exe export -o "${win_tmp}\\winget-packages.json" --accept-source-agreements > /dev/null 2>&1 || true
 
-  grep PackageIdentifier "$(wslpath "${win_tmp}")/winget-packages.json" \
+  winget_packages=$(grep PackageIdentifier "$(wslpath "${win_tmp}")/winget-packages.json" \
     | tr -d '\r' \
     | sed 's/.*: "//;s/"//' \
-    | grep -Ev '^(Microsoft\.(VCRedist|VCLibs|DotNet|DirectX|UI\.Xaml|GameInput|AppInstaller|NET\.Native)|Nvidia\.PhysX|XP[A-Z0-9]+)' \
-    > "${list_file_winget_packages}"
+    | grep -Ev '^(Microsoft\.(VCRedist|VCLibs|DotNet|DirectX|UI\.Xaml|GameInput|AppInstaller|NET\.Native)|Nvidia\.PhysX|XP[A-Z0-9]+)')
+
+  # export fails to correlate some installed packages (e.g. firefox) that an
+  # exact id lookup still finds, so keep listed packages that are installed.
+  if [[ -f "${list_file_winget_packages}" ]]; then
+    while IFS= read -r pkg; do
+      [[ -z "$pkg" ]] && continue
+      grep -qxF "$pkg" <<< "$winget_packages" && continue
+      winget.exe list -e --id "$pkg" --accept-source-agreements --disable-interactivity > /dev/null 2>&1 < /dev/null \
+        && winget_packages+=$'\n'"$pkg"
+    done < "${list_file_winget_packages}"
+  fi
+
+  print -r -- "$winget_packages" | LC_ALL=C sort -u > "${list_file_winget_packages}"
 
   if [[ -n "$win_appdata_local" ]]; then
     # adding a file under copy/AppData/Local is enough to have it backed up
