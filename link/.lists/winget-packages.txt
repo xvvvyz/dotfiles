@@ -3,6 +3,7 @@ EpicGames.EpicGamesLauncher
 EpicGames.EpicOnlineServices
 GnuPG.GnuPG
 Jellyfin.JellyfinMediaPlayer
+Logitech.OptionsPlus
 Microsoft.PowerToys
 Microsoft.WSL
 Microsoft.WindowsAppRuntime.1.2
