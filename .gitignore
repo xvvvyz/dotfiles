@@ -3,11 +3,13 @@ link/.codex/
 link/.config/.wrangler/
 link/.config/JetBrains/
 link/.config/autostart/
+link/.config/btop/
 link/.config/configstore/
 link/.config/dconf/
 link/.config/enchant/
 link/.config/epiphany/
 link/.config/evolution/
+link/.config/fish/
 link/.config/gatsby/
 link/.config/github-copilot/
 link/.config/gtk-3.0/
