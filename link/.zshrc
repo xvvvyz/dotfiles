@@ -10,6 +10,8 @@ path=(
   $HOME/.bin
   $HOME/.bun/bin
   $HOME/.fzf/bin
+  $HOME/.kimi-code/bin
+  $HOME/.grok/bin
   $HOME/.local/bin
   $path
 )
