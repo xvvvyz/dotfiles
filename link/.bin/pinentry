@@ -1,9 +1,19 @@
 #!/bin/sh
 
+# Prefer a GUI pinentry. A terminal pinentry (curses/tty) draws on the
+# agent's "startup tty", which is usually the same terminal an `ssh -A`
+# client holds in raw mode -- keystrokes then get split between ssh and
+# pinentry (PIN shows in plaintext, layout breaks, "Bad PIN").
+# pinentry-gtk-2 / -qt / -gnome3 fall back to curses on their own when no
+# display is reachable, so the terminal candidates remain as a last resort.
+
 candidates="
 /opt/homebrew/bin/pinentry-mac
 /usr/local/bin/pinentry-mac
 /usr/bin/pinentry-mac
+/usr/bin/pinentry-gtk-2
+/usr/bin/pinentry-qt
+/usr/bin/pinentry-gnome3
 /usr/bin/pinentry-curses
 /bin/pinentry-curses
 /usr/bin/pinentry-tty
