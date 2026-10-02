@@ -11,6 +11,7 @@ git
 gnupg
 make
 nodejs
+pinentry-gtk2
 pinentry-tty
 python3-pip
 python3-pynvim
