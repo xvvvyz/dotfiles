@@ -52,6 +52,19 @@ Components: stable
 Signed-By: /etc/apt/keyrings/docker.asc
 EOF
 
+fancy_print "adding github cli sources..."
+sudo rm -f /etc/apt/sources.list.d/github-cli*.list /etc/apt/sources.list.d/github-cli*.sources
+sudo curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg -o /etc/apt/keyrings/githubcli-archive-keyring.gpg
+sudo chmod a+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+sudo tee /etc/apt/sources.list.d/github-cli.sources <<EOF
+Types: deb
+URIs: https://cli.github.com/packages
+Suites: stable
+Components: main
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/githubcli-archive-keyring.gpg
+EOF
+
 fancy_print "updating apt cache..."
 sudo apt update
 
