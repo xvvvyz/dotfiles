@@ -2,6 +2,7 @@
 
 source "$(dirname "$0")/utilities/config"
 source "$(dirname "$0")/utilities/fancy-print"
+source "$(dirname "$0")/utilities/nodesource"
 
 if command -v brew; then
   fancy_print "updating brew packages..."
@@ -15,6 +16,13 @@ if command -v brew; then
 fi
 
 if command -v apt; then
+  # only where install-debian.sh set nodesource up; a new lts line is then
+  # a newer nodejs, which the upgrade below moves to
+  if [[ -f /etc/apt/sources.list.d/nodesource.sources ]]; then
+    fancy_print "updating nodesource sources..."
+    add_nodesource_sources || fancy_print "couldn't look up node's lts line, keeping the current one"
+  fi
+
   fancy_print "updating apt cache..."
   sudo apt update
 

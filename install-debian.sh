@@ -6,6 +6,7 @@ source "$(dirname "$0")/link/.bin/utilities/config"
 source "$(dirname "$0")/link/.bin/utilities/env"
 source "$(dirname "$0")/link/.bin/utilities/fancy-print"
 source "$(dirname "$0")/link/.bin/utilities/fancy-ask"
+source "$(dirname "$0")/link/.bin/utilities/nodesource"
 
 GLOBIGNORE=".:.."
 
@@ -65,8 +66,18 @@ Architectures: $(dpkg --print-architecture)
 Signed-By: /etc/apt/keyrings/githubcli-archive-keyring.gpg
 EOF
 
+fancy_print "adding nodesource sources..."
+add_nodesource_sources
+
 fancy_print "updating apt cache..."
 sudo apt update
+
+# debian's node-corepack owns /usr/bin/corepack, which nodesource's nodejs
+# also ships, so debian's nodejs has to go before nodesource's can install
+if dpkg-query -W -f='${Version}' nodejs 2>/dev/null | grep -q dfsg; then
+  fancy_print "removing debian nodejs..."
+  sudo apt-get remove -y nodejs node-corepack
+fi
 
 fancy_print "installing apt packages..."
 xargs -a "${list_file_apt_packages}" sudo apt-get install -y

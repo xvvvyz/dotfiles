@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+# points apt at nodesource's repo for node's newest lts line, the one node:lts
+# tracks, so the host moves to each new lts with the containers. debian's own
+# nodejs is an end-of-life line that misses node's security releases.
+add_nodesource_sources() {
+  index=$(curl -fsSL https://nodejs.org/dist/index.json) || return 1
+  major=$(printf '%s\n' "$index" | grep -m1 '"lts":"' | grep -Po '"version":"v\K[0-9]+')
+  [ -n "$major" ] || return 1
+
+  # no globs: update runs this in zsh, which fails on ones that match nothing
+  sudo rm -f /etc/apt/sources.list.d/nodesource.list /etc/apt/sources.list.d/nodesource.sources
+  sudo rm -f /etc/apt/keyrings/nodesource.gpg /etc/apt/keyrings/nodesource.asc
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key -o /etc/apt/keyrings/nodesource.asc
+  sudo chmod a+r /etc/apt/keyrings/nodesource.asc
+  sudo tee /etc/apt/sources.list.d/nodesource.sources <<EOF
+Types: deb
+URIs: https://deb.nodesource.com/node_${major}.x
+Suites: nodistro
+Components: main
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/nodesource.asc
+EOF
+}
