@@ -72,7 +72,6 @@ fancy_print "installing neovim plugins..."
 nvim --headless '+Lazy! sync' +qa
 
 fancy_print "updating dotfiles remote..."
-git remote remove origin 2>/dev/null || true
-git remote add --mirror=push origin git@github.com:xvvvyz/dotfiles.git 2>/dev/null || true
+git remote set-url origin git@github.com:xvvvyz/dotfiles.git 2>/dev/null || true
 
 fancy_print "done!"
