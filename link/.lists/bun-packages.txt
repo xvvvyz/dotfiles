@@ -1,5 +1,4 @@
 @anthropic-ai/claude-code
-@openai/codex
 neovim
 prettier
 pyright
